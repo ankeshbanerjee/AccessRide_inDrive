@@ -4,6 +4,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Alert
 } from "react-native";
 import {
   FontAwesome,
@@ -14,13 +15,15 @@ import {
 import React, { useState } from "react";
 import { RadioButton } from "react-native-paper";
 
-const Home = () => {
+
+
+const Home = ({navigation}) => {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [checked, setChecked] = React.useState("");
 
   return (
-    <View style={{ marginTop: 55 }}>
+    <View style={{ marginTop : 30 }}>
       <Text style={styles.header}>AccessRide</Text>
       <View style={{ alignSelf: "center" }}>
         <View style={styles.inputContainer}>
@@ -52,12 +55,13 @@ const Home = () => {
           />
         </View>
       </View>
-      <Text style={{ alignSelf: "center", fontSize: 25, marginTop: 70 }}>
+      <Text style={{ alignSelf: "center", fontSize: 25, margin: 15 }}>
         Select Your Ride
       </Text>
       <View style={styles.options}>
         <View style={{ alignItems: "center" }}>
-          <MaterialCommunityIcons name="bike-fast" size={40} color="black" />
+          <MaterialCommunityIcons name="bike-fast" size={60} color="black" />
+          <Text>Bike</Text>
           <RadioButton
             value="bike"
             status={checked === "bike" ? "checked" : "unchecked"}
@@ -65,15 +69,19 @@ const Home = () => {
           />
         </View>
         <View style={{ alignItems: "center" }}>
-          <MaterialCommunityIcons name="rickshaw" size={40} color="black" />
+          <MaterialCommunityIcons name="rickshaw" size={65} color="black" />
+          <Text>Auto-rickshaw</Text>
           <RadioButton
             value="rickshaw"
             status={checked === "rickshaw" ? "checked" : "unchecked"}
             onPress={() => setChecked("rickshaw")}
           />
         </View>
-        <View style={{ alignItems: "center" }}>
-          <FontAwesome name="car" size={40} color="black" />
+      </View>
+      <View style={styles.options}>
+        <View style={{alignItems : 'center'}}>
+          <FontAwesome name="car" size={55} color="black" />
+          <Text>Car</Text>
           <RadioButton
             value="car"
             status={checked === "car" ? "checked" : "unchecked"}
@@ -81,7 +89,9 @@ const Home = () => {
           />
         </View>
         <View style={{ alignItems: "center" }}>
-          <MaterialIcons name="wheelchair-pickup" size={40} color="black" />
+          <MaterialIcons name="wheelchair-pickup" size={60} color="black" />
+          <Text>Wheelchair</Text>
+          <Text>accessible car</Text>
           <RadioButton
             value="wheelchair"
             status={checked === "wheelchair" ? "checked" : "unchecked"}
@@ -91,7 +101,20 @@ const Home = () => {
       </View>
       <TouchableOpacity
         style={styles.btn}
-        onPress={() => console.log("pressed")}
+        onPress={() => {
+          if (!source.length){
+            Alert.alert('Please enter source!')
+          }
+          else if (!destination.length){
+            Alert.alert('Please enter destination!')
+          }
+          else if (!checked.length){
+            Alert.alert('Please select your ride!')
+          }
+          else{
+          navigation.navigate('DriversScreen')
+          }
+        }}
       >
         <Text style={{ fontSize: 20 }}>Search Drivers</Text>
       </TouchableOpacity>
@@ -118,19 +141,20 @@ const styles = StyleSheet.create({
   options: {
     flexDirection: "row",
     justifyContent: "space-around",
-    margin: 20,
+    alignItems : 'center',
+    margin : 10
   },
   btn: {
     alignSelf: "center",
     backgroundColor: "#b7ed55",
     padding: 15,
     borderRadius: 10,
-    marginTop: 15,
+    marginTop: 10,
   },
   header: {
     alignSelf: "center",
     fontSize: 30,
-    margin: 40,
+    margin: 20,
     fontWeight: "bold",
   },
 });
