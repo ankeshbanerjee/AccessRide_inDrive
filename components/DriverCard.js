@@ -13,29 +13,41 @@ const DriverCard = (props) => {
           justifyContent: "space-between",
         }}
       >
-        <Entypo name="user" size={40} color="black" />
+        <Entypo name="user" size={60} color="black" />
         <View>
           <Text>Driver Name : {name}</Text>
-          <Text>Location : {location}</Text>
-          <Text>Arrival Time : {arrivalTime}</Text>
-        </View>
-        <View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-evenly",
-            }}
-          >
-            <FontAwesome name="star" size={24} color="#ecbd00" />
-            <Text>{rating}</Text>
-          </View>
-          <Text>$250.00</Text>
+          <Text>Driver's Location : {location}</Text>
+          <Text>Driver's Arrival Time : {arrivalTime}</Text>
         </View>
       </View>
-      <TouchableOpacity style={styles.btn} onPress={()=>navigation.navigate('DriverDetails')}>
-        <Text style={{ fontWeight: "bold" }}>Book Now</Text>
-      </TouchableOpacity>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginTop : 15
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+          }}
+        >
+          <FontAwesome name="star" size={24} color="#ecbd00" />
+          <Text style={{ fontWeight: "bold", marginLeft : 5 }}>{rating}</Text>
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={{ marginRight: 10, fontWeight: "bold" }}>$250.00</Text>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => navigation.navigate("DriverDetails")}
+          >
+            <Text style={{ fontWeight: "bold" }}>Book Now</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };
@@ -44,7 +56,7 @@ export default DriverCard;
 
 const styles = StyleSheet.create({
   container: {
-    width: "90%",
+    width: "85%",
     alignSelf: "center",
     borderRadius: 20,
     borderWidth: 2,
@@ -58,6 +70,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#b7ed55",
     padding: 10,
     borderRadius: 10,
-    marginTop: 10,
   },
 });
