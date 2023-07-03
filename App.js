@@ -10,8 +10,29 @@ import Contact from "./screeens/Contact";
 import User from "./screeens/User";
 import Drivers from "./screeens/Drivers";
 import DriverDetails from "./screeens/DriverDetails";
+import JourneyDetails from './screeens/JourneyDetails'
 
 
+const DriverDetailsStack = createNativeStackNavigator();
+
+function DriverDetailsStackScreen() {
+  return (
+    <DriverDetailsStack.Navigator screenOptions={{
+      headerStyle: {
+            backgroundColor: '#b7ed55',
+          },
+      headerTintColor: 'black',
+      headerTitleAlign : 'center',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerShadowVisible : false
+    }}>
+      <DriverDetailsStack.Screen name="DriverDetails" component={DriverDetails} options={{title: "Driver's Details"}}/>
+      <DriverDetailsStack.Screen name="JourneyDetails" component={JourneyDetails} options={{title: 'Your Journey Details'}}/>
+    </DriverDetailsStack.Navigator>
+  );
+}
 const DriversStack = createNativeStackNavigator();
 
 function DriversStackScreen() {
@@ -25,9 +46,10 @@ function DriversStackScreen() {
       headerTitleStyle: {
         fontWeight: 'bold',
       },
+      headerShadowVisible : false
     }}>
       <DriversStack.Screen name="Drivers" component={Drivers} options={{title: 'Available drivers'}}/>
-      <DriversStack.Screen name="DriverDetails" component={DriverDetails} options={{title: 'Driver Details'}}/>
+      <DriversStack.Screen name="DriverDetailsScreen" component={DriverDetailsStackScreen} options={{title: 'Driver Details', headerShown : false}}/>
     </DriversStack.Navigator>
   );
 }

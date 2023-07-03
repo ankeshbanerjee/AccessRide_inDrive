@@ -42,7 +42,7 @@ const DriverCard = (props) => {
           <Text style={{ marginRight: 10, fontWeight: "bold" }}>$250.00</Text>
           <TouchableOpacity
             style={styles.btn}
-            onPress={() => navigation.navigate("DriverDetails")}
+            onPress={() => navigation.navigate("DriverDetailsScreen")}
           >
             <Text style={{ fontWeight: "bold" }}>Book Now</Text>
           </TouchableOpacity>
