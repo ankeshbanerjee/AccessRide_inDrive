@@ -1,93 +1,112 @@
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView";
 
 const Contact = () => {
   const [expanded, setExpanded] = React.useState(true);
 
   const handlePress = () => setExpanded(!expanded);
 
-
   return (
-    <View style={styles.container}>
-      {/* <View style={styles.upperView}>
+    <ScrollView style={styles.container}>
+      <ReactNativeZoomableView
+        zoomEnabled={true}
+        maxZoom={2}
+        minZoom={1}
+        zoomStep={0.25}
+        initialZoom={1}
+        bindToBorders={true}
+      >
+        {/* <View style={styles.upperView}>
         <Text style={styles.upperText}>Help & Support</Text>
       </View> */}
-      <View style={styles.middleView}>
-        <Text style={styles.heading}>App Guidelines</Text>
+        <View style={styles.middleView}>
+          <Text style={styles.heading}>App Guidelines</Text>
 
-        <Text style={styles.paragraph}>
-          <Text style={styles.serialNumber}>1. </Text>
-          <Text style={styles.guideText}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-            gravida euismod quam eget imperdiet. Suspendisse scelerisque ut
-            ipsum vel auctor. Praesent sit amet dolor id
+          <Text style={styles.paragraph}>
+            <Text style={styles.serialNumber}>1. </Text>
+            <Text style={styles.guideText}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Vestibulum gravida euismod quam eget imperdiet. Suspendisse
+              scelerisque ut ipsum vel auctor. Praesent sit amet dolor id
+            </Text>
           </Text>
-        </Text>
-        <Text style={styles.paragraph}>
-          <Text style={styles.serialNumber}>2. </Text>
-          <Text style={styles.guideText}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-            gravida euismod quam eget imperdiet. Suspendisse scelerisque ut
-            ipsum vel auctor. Praesent sit amet dolor id
+          <Text style={styles.paragraph}>
+            <Text style={styles.serialNumber}>2. </Text>
+            <Text style={styles.guideText}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Vestibulum gravida euismod quam eget imperdiet. Suspendisse
+              scelerisque ut ipsum vel auctor. Praesent sit amet dolor id
+            </Text>
           </Text>
-        </Text>
-        <Text style={styles.paragraph}>
-          <Text style={styles.serialNumber}>3. </Text>
-          <Text style={styles.guideText}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-            gravida euismod quam eget imperdiet. Suspendisse scelerisque ut
-            ipsum vel auctor. Praesent sit amet dolor id
+          <Text style={styles.paragraph}>
+            <Text style={styles.serialNumber}>3. </Text>
+            <Text style={styles.guideText}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Vestibulum gravida euismod quam eget imperdiet. Suspendisse
+              scelerisque ut ipsum vel auctor. Praesent sit amet dolor id
+            </Text>
           </Text>
-        </Text>
-        <Text style={styles.heading}>FAQs</Text>
-        <TouchableOpacity style={styles.questionContainer}>
-          <Text style={styles.serialNumber}>1. </Text>
-          <Text style={styles.questionText}>
-            How can I contact AccessRide in the event I need help with my
-            booking?
-          </Text>
-          <Icon
-            name="add"
-            size={24}
-            color="darkgreen"
-            style={styles.plusIcon}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.questionContainer}>
-          <Text style={styles.serialNumber}>2. </Text>
-          <Text style={styles.questionText}>
-            Is booking cancellation allowed after booking?
-          </Text>
-          <Icon
-            name="add"
-            size={24}
-            color="darkgreen"
-            style={styles.plusIcon}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.lowerView}>
-        <View style={styles.contactContainer}>
-          <Icon
-            name="phone"
-            size={24}
-            color="black"
-            style={styles.contactIcon}
-          />
-          <Text style={styles.contactText} selectable>+12345678910</Text>
+          <Text style={styles.heading}>FAQs</Text>
+          <TouchableOpacity style={styles.questionContainer}>
+            <Text style={styles.serialNumber}>1. </Text>
+            <Text style={styles.questionText}>
+              How can I contact AccessRide in the event I need help with my
+              booking?
+            </Text>
+            <Icon
+              name="add"
+              size={24}
+              color="darkgreen"
+              style={styles.plusIcon}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.questionContainer}>
+            <Text style={styles.serialNumber}>2. </Text>
+            <Text style={styles.questionText}>
+              Is booking cancellation allowed after booking?
+            </Text>
+            <Icon
+              name="add"
+              size={24}
+              color="darkgreen"
+              style={styles.plusIcon}
+            />
+          </TouchableOpacity>
         </View>
-        <View style={styles.contactContainer}>
-          <Icon
-            name="email"
-            size={24}
-            color="black"
-            style={styles.contactIcon}
-          />
-          <Text style={styles.contactText} selectable>xyz@gmail.com</Text>
+        <View style={styles.lowerView}>
+          <View style={styles.contactContainer}>
+            <Icon
+              name="phone"
+              size={24}
+              color="black"
+              style={styles.contactIcon}
+            />
+            <Text style={styles.contactText} selectable>
+              +12345678910
+            </Text>
+          </View>
+          <View style={styles.contactContainer}>
+            <Icon
+              name="email"
+              size={24}
+              color="black"
+              style={styles.contactIcon}
+            />
+            <Text style={styles.contactText} selectable>
+              xyz@gmail.com
+            </Text>
+          </View>
         </View>
-      </View>
-    </View>
+      </ReactNativeZoomableView>
+    </ScrollView>
   );
 };
 
@@ -95,7 +114,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: "white",
-    paddingBottom : 50
+    // paddingBottom: 50,
   },
   // upperView: {
   //   flex: 1.5,
@@ -177,6 +196,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+    marginTop : 90
   },
   contactContainer: {
     flexDirection: "row",

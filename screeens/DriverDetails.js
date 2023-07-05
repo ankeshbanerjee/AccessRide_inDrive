@@ -5,11 +5,13 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  ScrollView
 } from "react-native";
 import React, { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/FontAwesome";
 import * as Haptics from "expo-haptics";
+import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView";
 
 const DriverDetails = ({ route, navigation }) => {
   const [feedback, setFeedback] = useState("");
@@ -29,84 +31,96 @@ const DriverDetails = ({ route, navigation }) => {
   const { name, currentLocation, rating } = route.params;
 
   return (
-    <View style={styles.container}>
-      <View style={styles.upperview}>
-        {/* <Icon name="chevron-left" style={styles.icon} /> */}
-        <Image source={require("../assets/driver.jpg")} style={styles.photo} />
-      </View>
-      <View style={styles.middleview}>
-        <Text style={styles.heading}>Driver Details:</Text>
-        <View style={{ marginVertical: 10, alignSelf: "center" }}>
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>{name}</Text>
-          {/* <Text>Driver's Location : {currentLocation}</Text> */}
+    <ScrollView style={styles.container}>
+      <ReactNativeZoomableView
+        zoomEnabled={true}
+        maxZoom={2}
+        minZoom={1}
+        zoomStep={0.25}
+        initialZoom={1}
+        bindToBorders={true}
+      >
+        <View style={styles.upperview}>
+          {/* <Icon name="chevron-left" style={styles.icon} /> */}
+          <Image
+            source={require("../assets/driver.jpg")}
+            style={styles.photo}
+          />
         </View>
-        <View style={styles.detailsContainer}>
-          <Icon name="star" style={styles.starIcon} />
-          <Text style={styles.detailsText}>{rating}</Text>
-        </View>
-        {/* <TouchableOpacity
+        <View style={styles.middleview}>
+          <Text style={styles.heading}>Driver Details:</Text>
+          <View style={{ marginVertical: 10, alignSelf: "center" }}>
+            <Text style={{ fontSize: 20, fontWeight: "bold" }}>{name}</Text>
+            {/* <Text>Driver's Location : {currentLocation}</Text> */}
+          </View>
+          <View style={styles.detailsContainer}>
+            <Icon name="star" style={styles.starIcon} />
+            <Text style={styles.detailsText}>{rating}</Text>
+          </View>
+          {/* <TouchableOpacity
           style={styles.feedbackBox}
           onPress={handleFeedbackPress}
         >
           <Text style={styles.feedbackText}>Give Feedback</Text>
           <Icon name="microphone" style={styles.microphoneIcon} />
         </TouchableOpacity> */}
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={setFeedback}
-            value={feedback}
-            placeholder="Give Feeback"
-            onFocus={() =>
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
-            }
-          />
-          <FontAwesome
-            name="microphone"
-            size={24}
-            color="black"
-            style={{ marginRight: 10 }}
-          />
-        </View>
-        <Text style={styles.customerFeedbackHeading}>Customer Feedback:</Text>
-        {feedbacks.map((feedback, index) => (
-          <View style={styles.feedbackItem} key={index}>
-            <Text style={styles.customerFeedback}>{feedback}</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={setFeedback}
+              value={feedback}
+              placeholder="Give Feeback"
+              onFocus={() =>
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+              }
+            />
+            <FontAwesome
+              name="microphone"
+              size={24}
+              color="black"
+              style={{ marginRight: 10 }}
+            />
           </View>
-        ))}
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.bookButton}
-            onPress={() => {
-              Haptics.notificationAsync(
-                Haptics.NotificationFeedbackType.Success
-              );
-              navigation.navigate("JourneyDetails");
-            }}
-          >
-            <Text style={styles.buttonText}>Book</Text>
-          </TouchableOpacity>
+          <Text style={styles.customerFeedbackHeading}>Customer Feedback:</Text>
+          {feedbacks.map((feedback, index) => (
+            <View style={styles.feedbackItem} key={index}>
+              <Text style={styles.customerFeedback}>{feedback}</Text>
+            </View>
+          ))}
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.bookButton}
+              onPress={() => {
+                Haptics.notificationAsync(
+                  Haptics.NotificationFeedbackType.Success
+                );
+                navigation.navigate("JourneyDetails");
+              }}
+            >
+              <Text style={styles.buttonText}>Book</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.rateButton}
+              onPress={() =>
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+              }
+            >
+              <Text style={styles.buttonText}>Rate</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.rateButton}
-            onPress={() =>
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
-            }
-          >
-            <Text style={styles.buttonText}>Rate</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
+      </ReactNativeZoomableView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
-    paddingBottom: 75,
+    // backgroundColor: "white",
+    marginTop : 15
   },
   upperview: {
     flex: 0.8,
@@ -135,7 +149,7 @@ const styles = StyleSheet.create({
   },
   middleview: {
     flex: 8,
-    backgroundColor: "white",
+    // backgroundColor: "white",
     alignItems: "center",
   },
   heading: {

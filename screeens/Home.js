@@ -4,7 +4,8 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Alert
+  Alert,
+  ScrollView
 } from "react-native";
 import {
   FontAwesome,
@@ -15,6 +16,7 @@ import {
 import React, { useState } from "react";
 import { RadioButton } from "react-native-paper";
 import * as Haptics from "expo-haptics";
+import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
 
 const Home = ({ navigation }) => {
   const [source, setSource] = useState("");
@@ -22,7 +24,15 @@ const Home = ({ navigation }) => {
   const [checked, setChecked] = React.useState("");
 
   return (
-    <View style={{ marginTop: 30 }}>
+    <ScrollView style={styles.container}>
+    <ReactNativeZoomableView
+            zoomEnabled={true}
+            maxZoom={2}
+            minZoom={1}
+            zoomStep={0.25}
+            initialZoom={1}
+            bindToBorders={true}
+          >
       <Text style={styles.header}>AccessRide</Text>
       <View style={{ alignSelf: "center" }}>
         <View style={styles.inputContainer} >
@@ -105,13 +115,13 @@ const Home = ({ navigation }) => {
         onPress={() => {
           if (!source.length) {
             Alert.alert("Please enter source!");
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
           } else if (!destination.length) {
             Alert.alert("Please enter destination!");
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
           } else if (!checked.length) {
             Alert.alert("Please select your ride!");
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
           } else {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             navigation.navigate("DriversScreen");
@@ -120,11 +130,16 @@ const Home = ({ navigation }) => {
       >
         <Text style={{ fontSize: 20 }}>Search Drivers</Text>
       </TouchableOpacity>
-    </View>
+      </ReactNativeZoomableView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  container : {
+    flex : 1,
+    marginTop : 30,
+  },
   textInput: {
     width: "87%",
     padding: 10,

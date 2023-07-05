@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import * as Haptics from "expo-haptics";
 import { Ionicons } from "@expo/vector-icons";
+import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView";
 import JourneyDetailsMap from "../components/JourneyDetailsMap";
 import Timer from "../components/Timer";
 
@@ -68,8 +69,8 @@ export default JourneyDetails;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 15,
+    marginTop : 15,
+    flex: 1
   },
   btn: {
     alignSelf: "center",
