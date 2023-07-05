@@ -1,10 +1,21 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
+import React, { useState } from "react";
+import { FontAwesome } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/FontAwesome";
+import * as Haptics from "expo-haptics";
 
-const DriverDetails = ({navigation}) => {
+const DriverDetails = ({ route, navigation }) => {
+  const [feedback, setFeedback] = useState("");
   const handleFeedbackPress = () => {
     // Handle feedback button press
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     console.log("Give Feedback pressed");
   };
 
@@ -15,24 +26,48 @@ const DriverDetails = ({navigation}) => {
     "4. Helped me to walk",
   ];
 
+  const { name, currentLocation, rating } = route.params;
+
   return (
     <View style={styles.container}>
       <View style={styles.upperview}>
-        {/* <Image source={require("../assets/driver.jpg")} style={styles.photo} /> */}
+        {/* <Icon name="chevron-left" style={styles.icon} /> */}
+        <Image source={require("../assets/driver.jpg")} style={styles.photo} />
       </View>
       <View style={styles.middleview}>
         <Text style={styles.heading}>Driver Details:</Text>
+        <View style={{ marginVertical: 10, alignSelf: "center" }}>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>{name}</Text>
+          {/* <Text>Driver's Location : {currentLocation}</Text> */}
+        </View>
         <View style={styles.detailsContainer}>
           <Icon name="star" style={styles.starIcon} />
-          <Text style={styles.detailsText}>5</Text>
+          <Text style={styles.detailsText}>{rating}</Text>
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.feedbackBox}
           onPress={handleFeedbackPress}
         >
           <Text style={styles.feedbackText}>Give Feedback</Text>
           <Icon name="microphone" style={styles.microphoneIcon} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={setFeedback}
+            value={feedback}
+            placeholder="Give Feeback"
+            onFocus={() =>
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+            }
+          />
+          <FontAwesome
+            name="microphone"
+            size={24}
+            color="black"
+            style={{ marginRight: 10 }}
+          />
+        </View>
         <Text style={styles.customerFeedbackHeading}>Customer Feedback:</Text>
         {feedbacks.map((feedback, index) => (
           <View style={styles.feedbackItem} key={index}>
@@ -40,12 +75,25 @@ const DriverDetails = ({navigation}) => {
           </View>
         ))}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.bookButton} onPress={()=>navigation.navigate("JourneyDetails")}>
+          <TouchableOpacity
+            style={styles.bookButton}
+            onPress={() => {
+              Haptics.notificationAsync(
+                Haptics.NotificationFeedbackType.Success
+              );
+              navigation.navigate("JourneyDetails");
+            }}
+          >
             <Text style={styles.buttonText}>Book</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.rateButton}>
+          <TouchableOpacity
+            style={styles.rateButton}
+            onPress={() =>
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+            }
+          >
             <Text style={styles.buttonText}>Rate</Text>
           </TouchableOpacity>
         </View>
@@ -58,13 +106,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+    paddingBottom: 75,
   },
   upperview: {
-    flex: 1.5,
-    backgroundColor: "#b7ed55",
+    flex: 0.8,
+    // backgroundColor: "#b7ed55",
     flexDirection: "row",
     alignItems: "flex-end",
-    paddingLeft: 10,
+    paddingLeft: 45,
     paddingBottom: 10,
     zIndex: 1,
     borderBottomLeftRadius: 20,
@@ -92,8 +141,8 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
-    marginTop: 75,
+    // marginBottom: 10,
+    marginTop: 70,
   },
   detailsContainer: {
     flexDirection: "row",
@@ -140,7 +189,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonContainer: {
-    marginTop: 20,
+    marginTop: 13,
     flexDirection: "row",
     justifyContent: "center",
   },
@@ -164,6 +213,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
 
     textAlign: "center",
+  },
+  textInput: {
+    width: "87%",
+    padding: 10,
+    paddingLeft: 15,
+    fontSize: 17,
+  },
+  inputContainer: {
+    marginTop: 20,
+    padding: 5,
+    width: "75%",
+    borderRadius: 20,
+    backgroundColor: "#b7ed55",
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
 

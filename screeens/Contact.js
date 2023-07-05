@@ -10,9 +10,9 @@ const Contact = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.upperView}>
+      {/* <View style={styles.upperView}>
         <Text style={styles.upperText}>Help & Support</Text>
-      </View>
+      </View> */}
       <View style={styles.middleView}>
         <Text style={styles.heading}>App Guidelines</Text>
 
@@ -26,6 +26,14 @@ const Contact = () => {
         </Text>
         <Text style={styles.paragraph}>
           <Text style={styles.serialNumber}>2. </Text>
+          <Text style={styles.guideText}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
+            gravida euismod quam eget imperdiet. Suspendisse scelerisque ut
+            ipsum vel auctor. Praesent sit amet dolor id
+          </Text>
+        </Text>
+        <Text style={styles.paragraph}>
+          <Text style={styles.serialNumber}>3. </Text>
           <Text style={styles.guideText}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
             gravida euismod quam eget imperdiet. Suspendisse scelerisque ut
@@ -86,20 +94,20 @@ const Contact = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    // backgroundColor: "white",
     paddingBottom : 50
   },
-  upperView: {
-    flex: 1.5,
-    backgroundColor: "#b7ed55",
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    justifyContent: "center",
-    alignItems: "center",
-    borderBottomLeftRadius: 20, // Rounded bottom left corner
-    borderBottomRightRadius: 20, // Rounded bottom right corner
-  },
+  // upperView: {
+  //   flex: 1.5,
+  //   backgroundColor: "#b7ed55",
+  //   flexDirection: "row-reverse",
+  //   alignItems: "center",
+  //   paddingHorizontal: 16,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   borderBottomLeftRadius: 20, // Rounded bottom left corner
+  //   borderBottomRightRadius: 20, // Rounded bottom right corner
+  // },
   upperText: {
     fontSize: 24,
     fontWeight: "bold",
@@ -112,7 +120,7 @@ const styles = StyleSheet.create({
   },
   middleView: {
     flex: 5,
-    backgroundColor: "white",
+    // backgroundColor: "white",
     paddingHorizontal: 16,
     paddingTop: 20,
   },

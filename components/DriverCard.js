@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Entypo, FontAwesome } from "@expo/vector-icons";
+import * as Haptics from "expo-haptics";
 import React from "react";
 
 const DriverCard = (props) => {
@@ -25,7 +26,7 @@ const DriverCard = (props) => {
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
-          marginTop : 15
+          marginTop: 15,
         }}
       >
         <View
@@ -36,13 +37,25 @@ const DriverCard = (props) => {
           }}
         >
           <FontAwesome name="star" size={24} color="#ecbd00" />
-          <Text style={{ fontWeight: "bold", marginLeft : 5 }}>{rating}</Text>
+          <Text style={{ fontWeight: "bold", marginLeft: 5 }}>{rating}</Text>
         </View>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text style={{ marginRight: 10, fontWeight: "bold" }}>$250.00</Text>
           <TouchableOpacity
             style={styles.btn}
-            onPress={() => navigation.navigate("DriverDetailsScreen")}
+            onPress={() => {
+              Haptics.notificationAsync(
+                Haptics.NotificationFeedbackType.Success
+              );
+              navigation.navigate("DriverDetailsScreen", {
+                screen: "DriverDetails",
+                params: {
+                  name: name,
+                  currentLocation: location,
+                  rating: rating,
+                },
+              });
+            }}
           >
             <Text style={{ fontWeight: "bold" }}>Book Now</Text>
           </TouchableOpacity>

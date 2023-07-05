@@ -14,24 +14,24 @@ import {
 } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { RadioButton } from "react-native-paper";
+import * as Haptics from "expo-haptics";
 
-
-
-const Home = ({navigation}) => {
+const Home = ({ navigation }) => {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [checked, setChecked] = React.useState("");
 
   return (
-    <View style={{ marginTop : 30 }}>
+    <View style={{ marginTop: 30 }}>
       <Text style={styles.header}>AccessRide</Text>
       <View style={{ alignSelf: "center" }}>
-        <View style={styles.inputContainer}>
+        <View style={styles.inputContainer} >
           <TextInput
             style={styles.textInput}
             onChangeText={setSource}
             value={source}
             placeholder="Your location"
+            onFocus = {()=>Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)}
           />
           <FontAwesome
             name="microphone"
@@ -46,6 +46,7 @@ const Home = ({navigation}) => {
             onChangeText={setDestination}
             value={destination}
             placeholder="Where do you want to go?"
+            onFocus = {()=>Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)}
           />
           <FontAwesome
             name="microphone"
@@ -65,7 +66,7 @@ const Home = ({navigation}) => {
           <RadioButton
             value="bike"
             status={checked === "bike" ? "checked" : "unchecked"}
-            onPress={() => setChecked("bike")}
+            onPress={() => {setChecked("bike"); Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)}}
           />
         </View>
         <View style={{ alignItems: "center" }}>
@@ -74,18 +75,18 @@ const Home = ({navigation}) => {
           <RadioButton
             value="rickshaw"
             status={checked === "rickshaw" ? "checked" : "unchecked"}
-            onPress={() => setChecked("rickshaw")}
+            onPress={() => {setChecked("rickshaw"); Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)}}
           />
         </View>
       </View>
       <View style={styles.options}>
-        <View style={{alignItems : 'center'}}>
+        <View style={{ alignItems: "center" }}>
           <FontAwesome name="car" size={55} color="black" />
           <Text>Car</Text>
           <RadioButton
             value="car"
             status={checked === "car" ? "checked" : "unchecked"}
-            onPress={() => setChecked("car")}
+            onPress={() => {setChecked("car"); Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)}}
           />
         </View>
         <View style={{ alignItems: "center" }}>
@@ -95,24 +96,25 @@ const Home = ({navigation}) => {
           <RadioButton
             value="wheelchair"
             status={checked === "wheelchair" ? "checked" : "unchecked"}
-            onPress={() => setChecked("wheelchair")}
+            onPress={() => {setChecked("wheelchair"); Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)}}
           />
         </View>
       </View>
       <TouchableOpacity
         style={styles.btn}
         onPress={() => {
-          if (!source.length){
-            Alert.alert('Please enter source!')
-          }
-          else if (!destination.length){
-            Alert.alert('Please enter destination!')
-          }
-          else if (!checked.length){
-            Alert.alert('Please select your ride!')
-          }
-          else{
-          navigation.navigate('DriversScreen')
+          if (!source.length) {
+            Alert.alert("Please enter source!");
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+          } else if (!destination.length) {
+            Alert.alert("Please enter destination!");
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+          } else if (!checked.length) {
+            Alert.alert("Please select your ride!");
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+          } else {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+            navigation.navigate("DriversScreen");
           }
         }}
       >
@@ -141,8 +143,8 @@ const styles = StyleSheet.create({
   options: {
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems : 'center',
-    margin : 10
+    alignItems: "center",
+    margin: 10,
   },
   btn: {
     alignSelf: "center",
