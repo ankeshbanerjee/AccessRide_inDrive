@@ -5,7 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import {
   FontAwesome,
@@ -16,7 +16,8 @@ import {
 import React, { useState } from "react";
 import { RadioButton } from "react-native-paper";
 import * as Haptics from "expo-haptics";
-import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
+import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView";
+import * as Speech from "expo-speech";
 
 const Home = ({ navigation }) => {
   const [source, setSource] = useState("");
@@ -25,120 +26,148 @@ const Home = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.container}>
-    <ReactNativeZoomableView
-            zoomEnabled={true}
-            maxZoom={2}
-            minZoom={1}
-            zoomStep={0.25}
-            initialZoom={1}
-            bindToBorders={true}
-          >
-      <Text style={styles.header}>AccessRide</Text>
-      <View style={{ alignSelf: "center" }}>
-        <View style={styles.inputContainer} >
-          <TextInput
-            style={styles.textInput}
-            onChangeText={setSource}
-            value={source}
-            placeholder="Your location"
-            onFocus = {()=>Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)}
-          />
-          <FontAwesome
-            name="microphone"
-            size={24}
-            color="black"
-            style={{ marginRight: 10 }}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={setDestination}
-            value={destination}
-            placeholder="Where do you want to go?"
-            onFocus = {()=>Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)}
-          />
-          <FontAwesome
-            name="microphone"
-            size={24}
-            color="black"
-            style={{ marginRight: 10 }}
-          />
-        </View>
-      </View>
-      <Text style={{ alignSelf: "center", fontSize: 25, margin: 15 }}>
-        Select Your Ride
-      </Text>
-      <View style={styles.options}>
-        <View style={{ alignItems: "center" }}>
-          <MaterialCommunityIcons name="bike-fast" size={60} color="black" />
-          <Text>Bike</Text>
-          <RadioButton
-            value="bike"
-            status={checked === "bike" ? "checked" : "unchecked"}
-            onPress={() => {setChecked("bike"); Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)}}
-          />
-        </View>
-        <View style={{ alignItems: "center" }}>
-          <MaterialCommunityIcons name="rickshaw" size={65} color="black" />
-          <Text>Auto-rickshaw</Text>
-          <RadioButton
-            value="rickshaw"
-            status={checked === "rickshaw" ? "checked" : "unchecked"}
-            onPress={() => {setChecked("rickshaw"); Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)}}
-          />
-        </View>
-      </View>
-      <View style={styles.options}>
-        <View style={{ alignItems: "center" }}>
-          <FontAwesome name="car" size={55} color="black" />
-          <Text>Car</Text>
-          <RadioButton
-            value="car"
-            status={checked === "car" ? "checked" : "unchecked"}
-            onPress={() => {setChecked("car"); Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)}}
-          />
-        </View>
-        <View style={{ alignItems: "center" }}>
-          <MaterialIcons name="wheelchair-pickup" size={60} color="black" />
-          <Text>Wheelchair</Text>
-          <Text>accessible car</Text>
-          <RadioButton
-            value="wheelchair"
-            status={checked === "wheelchair" ? "checked" : "unchecked"}
-            onPress={() => {setChecked("wheelchair"); Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)}}
-          />
-        </View>
-      </View>
-      <TouchableOpacity
-        style={styles.btn}
-        onPress={() => {
-          if (!source.length) {
-            Alert.alert("Please enter source!");
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-          } else if (!destination.length) {
-            Alert.alert("Please enter destination!");
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-          } else if (!checked.length) {
-            Alert.alert("Please select your ride!");
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-          } else {
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-            navigation.navigate("DriversScreen");
-          }
-        }}
+      <ReactNativeZoomableView
+        zoomEnabled={true}
+        maxZoom={2}
+        minZoom={1}
+        zoomStep={0.25}
+        initialZoom={1}
+        bindToBorders={true}
       >
-        <Text style={{ fontSize: 20 }}>Search Drivers</Text>
-      </TouchableOpacity>
+        <Text style={styles.header}>AccessRide</Text>
+        <View style={{ alignSelf: "center" }}>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={setSource}
+              value={source}
+              placeholder="Your location"
+              onFocus={() => {
+                Speech.speak("Enter your current location");
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              }}
+            />
+            <FontAwesome
+              name="microphone"
+              size={24}
+              color="black"
+              style={{ marginRight: 10 }}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={setDestination}
+              value={destination}
+              placeholder="Where do you want to go?"
+              onFocus={() => {
+                Speech.speak("Enter your destination");
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              }}
+            />
+            <FontAwesome
+              name="microphone"
+              size={24}
+              color="black"
+              style={{ marginRight: 10 }}
+            />
+          </View>
+        </View>
+        <Text style={{ alignSelf: "center", fontSize: 25, margin: 15 }}>
+          Select Your Ride
+        </Text>
+        <View style={styles.options}>
+          <View style={{ alignItems: "center" }}>
+            <MaterialCommunityIcons name="bike-fast" size={60} color="black" />
+            <Text>Bike</Text>
+            <RadioButton
+              value="bike"
+              status={checked === "bike" ? "checked" : "unchecked"}
+              onPress={() => {
+                setChecked("bike");
+                Speech.speak("Bike Selected")
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              }}
+            />
+          </View>
+          <View style={{ alignItems: "center" }}>
+            <MaterialCommunityIcons name="rickshaw" size={65} color="black" />
+            <Text>Auto-rickshaw</Text>
+            <RadioButton
+              value="rickshaw"
+              status={checked === "rickshaw" ? "checked" : "unchecked"}
+              onPress={() => {
+                setChecked("rickshaw");
+                Speech.speak("Auto-rickshaw Selected")
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              }}
+            />
+          </View>
+        </View>
+        <View style={styles.options}>
+          <View style={{ alignItems: "center" }}>
+            <FontAwesome name="car" size={55} color="black" />
+            <Text>Car</Text>
+            <RadioButton
+              value="car"
+              status={checked === "car" ? "checked" : "unchecked"}
+              onPress={() => {
+                setChecked("car");
+                Speech.speak("Four-wheeler car Selected")
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              }}
+            />
+          </View>
+          <View style={{ alignItems: "center" }}>
+            <MaterialIcons name="wheelchair-pickup" size={60} color="black" />
+            <Text>Wheelchair</Text>
+            <Text>accessible car</Text>
+            <RadioButton
+              value="wheelchair"
+              status={checked === "wheelchair" ? "checked" : "unchecked"}
+              onPress={() => {
+                setChecked("wheelchair");
+                Speech.speak("wheelchair accessible car Selected")
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              }}
+            />
+          </View>
+        </View>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => {
+            if (!source.length) {
+              Alert.alert("Please enter your current location!");
+              Speech.speak("Please enter your current location")
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+            } else if (!destination.length) {
+              Alert.alert("Please enter destination!");
+              Speech.speak("lease enter destination!")
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+            } else if (!checked.length) {
+              Alert.alert("Please select your ride!");
+              Speech.speak("Please select your ride!")
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+            } else {
+              Speech.speak("Getting all the available drivers for you")
+              Haptics.notificationAsync(
+                Haptics.NotificationFeedbackType.Success
+              );
+              navigation.navigate("DriversScreen");
+            }
+          }}
+        >
+          <Text style={{ fontSize: 20 }}>Search Drivers</Text>
+        </TouchableOpacity>
       </ReactNativeZoomableView>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container : {
-    flex : 1,
-    marginTop : 30,
+  container: {
+    flex: 1,
+    marginTop: 30,
   },
   textInput: {
     width: "87%",

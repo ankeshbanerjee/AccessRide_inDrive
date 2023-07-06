@@ -6,7 +6,14 @@ import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/R
 import JourneyDetailsMap from "../components/JourneyDetailsMap";
 import Timer from "../components/Timer";
 
-const JourneyDetails = ({ navigation }) => {
+const JourneyDetails = ({route, navigation}) => {
+  const getTime = (time)=>{
+    const string1 = time;
+    const string2 = " minutes";
+    const result = [...string1].filter(c => !string2.includes(c)).join('');
+    const number = parseInt(result)
+    return number;
+  }
   return (
     <View style={styles.container}>
       <Text
@@ -21,7 +28,7 @@ const JourneyDetails = ({ navigation }) => {
       <Text style={{ fontSize: 22, alignSelf: "center", marginVertical: 20 }}>
         Amount Payable : <Text style={{ fontWeight: "bold" }}>$250</Text>
       </Text>
-      <Timer time={10} />
+      <Timer time={getTime(route.params.time)} />
       <View
         style={{
           flexDirection: "row",
