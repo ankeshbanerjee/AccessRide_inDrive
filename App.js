@@ -13,7 +13,9 @@ import User from "./screeens/User";
 import Drivers from "./screeens/Drivers";
 import DriverDetails from "./screeens/DriverDetails";
 import JourneyDetails from "./screeens/JourneyDetails";
-
+import Register from "./screeens/Register";
+import Login from "./screeens/Login";
+import Welcome from "./screeens/Welcome";
 const DriverDetailsStack = createNativeStackNavigator();
 
 function DriverDetailsStackScreen() {
@@ -87,6 +89,25 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Home" component={Home}/>
       <HomeStack.Screen name="DriversScreen" component={DriversStackScreen} />
     </HomeStack.Navigator>
+  );
+}
+
+const WelcomeStack = createNativeStackNavigator();
+export default function WelcomeStackScreen() {
+  return (
+    <NavigationContainer>
+    <Stack.Navigator initialRouteName='Welcome'>
+      <Stack.Screen name='AccessRide' component={Welcome}>
+        
+      </Stack.Screen>
+      <Stack.Screen name='Login' component={Login}>
+        
+      </Stack.Screen>
+      <Stack.Screen name='Register' component={Register}>
+        
+        </Stack.Screen>
+    </Stack.Navigator>
+  </NavigationContainer>
   );
 }
 
