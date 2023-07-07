@@ -16,7 +16,7 @@ import {
 import React, { useState } from "react";
 import { RadioButton } from "react-native-paper";
 import * as Haptics from "expo-haptics";
-import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
+// import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
 
 const Home = ({ navigation }) => {
   const [source, setSource] = useState("");
@@ -25,14 +25,15 @@ const Home = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.container}>
-    <ReactNativeZoomableView
-            zoomEnabled={true}
+      {/* don't use react native zoomable view it's buggy in some mobiles */}
+    {/* <ReactNativeZoomableView */}  
+            {/* zoomEnabled={true}
             maxZoom={2}
             minZoom={1}
             zoomStep={0.25}
             initialZoom={1}
-            bindToBorders={true}
-          >
+            bindToBorders={false}
+          > */}
       <Text style={styles.header}>AccessRide</Text>
       <View style={{ alignSelf: "center" }}>
         <View style={styles.inputContainer} >
@@ -128,9 +129,13 @@ const Home = ({ navigation }) => {
           }
         }}
       >
-        <Text style={{ fontSize: 20 }}>Search Drivers</Text>
+        <Text style={{ 
+          fontSize: 20,
+          fontWeight: "bold",
+
+         }}>Search Drivers</Text>
       </TouchableOpacity>
-      </ReactNativeZoomableView>
+      {/* </ReactNativeZoomableView> */}
     </ScrollView>
   );
 };
@@ -139,6 +144,7 @@ const styles = StyleSheet.create({
   container : {
     flex : 1,
     marginTop : 30,
+    marginBottom : 70,
   },
   textInput: {
     width: "87%",
@@ -167,6 +173,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     marginTop: 10,
+    marginBottom: 10,
   },
   header: {
     alignSelf: "center",

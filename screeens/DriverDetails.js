@@ -120,7 +120,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: "white",
-    marginTop : 15
+    marginTop : 15,
+    marginBottom : 80
   },
   upperview: {
     flex: 0.8,

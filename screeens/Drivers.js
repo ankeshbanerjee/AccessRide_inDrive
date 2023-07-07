@@ -35,6 +35,7 @@ const Drivers = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    // marginBottom: 80,
     flex: 1,
     paddingBottom: 75,
   },
