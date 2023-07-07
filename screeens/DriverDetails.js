@@ -127,8 +127,8 @@ const DriverDetails = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "white",
-    marginTop: 15,
+    backgroundColor: "white",
+    paddingTop: 15,
   },
   upperview: {
     flex: 0.8,

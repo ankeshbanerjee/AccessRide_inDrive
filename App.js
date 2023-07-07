@@ -9,10 +9,11 @@ import * as Speech from 'expo-speech';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Home from "./screeens/Home";
 import Contact from "./screeens/Contact";
-import User from "./screeens/User";
+import UserProfile from "./screeens/UserProfile";
 import Drivers from "./screeens/Drivers";
 import DriverDetails from "./screeens/DriverDetails";
 import JourneyDetails from "./screeens/JourneyDetails";
+import Settings from './screeens/Settings'
 
 const DriverDetailsStack = createNativeStackNavigator();
 
@@ -107,6 +108,8 @@ export default function App() {
               iconName = focused ? "call" : "call-outline";
             } else if (route.name === "UserScreen") {
               iconName = focused ? "person" : "person-outline";
+            } else if (route.name === "SettingsScreen") {
+              iconName = focused ? "settings" : "settings-outline";
             }
 
             // You can return any component that you like here!
@@ -162,7 +165,7 @@ export default function App() {
         />
         <Tab.Screen
           name="UserScreen"
-          component={User}
+          component={UserProfile}
           listeners={() => ({
             tabPress: () => {
               Speech.speak('User profile')
@@ -170,6 +173,17 @@ export default function App() {
             },
           })}
           options={{title : "User profile"}}
+        />
+        <Tab.Screen
+          name="SettingsScreen"
+          component={Settings}
+          listeners={() => ({
+            tabPress: () => {
+              Speech.speak('Accessibility settings')
+              Haptics.selectionAsync();
+            },
+          })}
+          options={{title : "Accessibility settings"}}
         />
       </Tab.Navigator>
     </NavigationContainer>
