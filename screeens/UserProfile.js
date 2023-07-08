@@ -14,6 +14,14 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { Entypo } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
+//translation modules
+
+import { I18n } from 'i18n-js';
+import {en,hi,bn} from '../i18n'
+
+import useStore from "../store";
+
+
 const UserProfile = () => {
   const [image, setImage] = useState(null); // Initialize with null
   const [dummyImage, setDummyImage] = useState(
@@ -26,6 +34,17 @@ const UserProfile = () => {
   const [email, setEmail] = useState("johndoe@example.com");
   const [password, setPassword] = useState("password123");
   const [phoneNumber, setPhoneNumber] = useState("123-456-7890");
+
+  //localization
+  const i18n = new I18n();
+
+  const { locale } = useStore((state) => ({
+    locale: state.locale,
+  }));
+
+  i18n.fallbacks = true;
+  i18n.translations = { en, bn };
+  i18n.locale = locale;
 
   // useEffect(() => {
   //   // Load initial image when the component mounts

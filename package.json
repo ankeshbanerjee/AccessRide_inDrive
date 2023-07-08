@@ -11,17 +11,23 @@
   "dependencies": {
     "@dudigital/react-native-zoomable-view": "^1.1.4",
     "@expo/webpack-config": "^18.0.1",
+    "@react-native-async-storage/async-storage": "^1.19.0",
     "@react-native-community/slider": "^4.4.2",
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
     "deprecated-react-native-prop-types": "^4.1.0",
     "expo": "~48.0.18",
+    "expo-av": "~13.2.1",
     "expo-checkbox": "~2.3.1",
     "expo-haptics": "~12.2.1",
     "expo-image-picker": "~14.1.1",
+    "expo-linking": "~4.0.1",
+    "expo-localization": "^14.3.0",
+    "expo-location": "^16.0.0",
     "expo-speech": "~11.1.1",
     "expo-status-bar": "~1.4.4",
+    "i18n-js": "^4.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.71.8",
@@ -33,9 +39,8 @@
     "react-native-screens": "~3.20.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-voice": "^0.3.0",
-    "expo-linking": "~4.0.1",
     "react-native-web": "~0.18.10",
-    "expo-av": "~13.2.1"
+    "zustand": "^4.3.9"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
