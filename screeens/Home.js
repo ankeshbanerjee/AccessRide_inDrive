@@ -194,8 +194,8 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   container : {
     flex : 1,
-    // marginTop : 30,
-    marginBottom : 70,
+    paddingTop : 30,
+    paddingBottom : 70,
     flex: 1,
     // paddingTop: 30,
     backgroundColor : 'white'

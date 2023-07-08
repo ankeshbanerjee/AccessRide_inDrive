@@ -909,11 +909,11 @@ const Settings = () => {
           <View style={{ flexDirection : 'row', alignItems : 'center', justifyContent : 'space-around' }}>
             <View style={{ flexDirection : 'row', alignItems : 'center' }}>
             {!isPlaying1 ? (
-              <TouchableOpacity onPress={playSound1}>
+              <TouchableOpacity onPress={playSound1} style={{borderWidth: 1, borderColor : 'green', borderRadius : 50}}>
                 <Entypo name="controller-play" size={24} color="#40c351" />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity onPress={pauseSound1}>
+              <TouchableOpacity onPress={pauseSound1} style={{borderWidth: 1, borderColor : 'green', borderRadius : 50}}>
                 <Ionicons name="pause" size={24} color="#40c351" />
               </TouchableOpacity>
             )}
@@ -931,11 +931,11 @@ const Settings = () => {
           <View style={{ flexDirection : 'row', alignItems : 'center', justifyContent : 'space-around' }}>
             <View style={{ flexDirection : 'row', alignItems : 'center' }}>
             {!isPlaying2 ? (
-              <TouchableOpacity onPress={playSound2}>
+              <TouchableOpacity onPress={playSound2} style={{borderWidth: 1, borderColor : 'green', borderRadius : 50}}>
                 <Entypo name="controller-play" size={24} color="#40c351" />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity onPress={pauseSound2}>
+              <TouchableOpacity onPress={pauseSound2} style={{borderWidth: 1, borderColor : 'green', borderRadius : 50}}>
                 <Ionicons name="pause" size={24} color="#40c351" />
               </TouchableOpacity>
             )}
@@ -953,11 +953,11 @@ const Settings = () => {
           <View style={{ flexDirection : 'row', alignItems : 'center', justifyContent : 'space-around' }}>
             <View style={{ flexDirection : 'row', alignItems : 'center' }}>
             {!isPlaying3 ? (
-              <TouchableOpacity onPress={playSound3}>
+              <TouchableOpacity onPress={playSound3} style={{borderWidth: 1, borderColor : 'green', borderRadius : 50}}>
                 <Entypo name="controller-play" size={24} color="#40c351" />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity onPress={pauseSound3}>
+              <TouchableOpacity onPress={pauseSound3} style={{borderWidth: 1, borderColor : 'green', borderRadius : 50}}>
                 <Ionicons name="pause" size={24} color="#40c351" />
               </TouchableOpacity>
             )}
@@ -975,11 +975,11 @@ const Settings = () => {
           <View style={{ flexDirection : 'row', alignItems : 'center', justifyContent : 'space-around' }}>
             <View style={{ flexDirection : 'row', alignItems : 'center' }}>
             {!isPlaying4 ? (
-              <TouchableOpacity onPress={playSound4}>
+              <TouchableOpacity onPress={playSound4} style={{borderWidth: 1, borderColor : 'green', borderRadius : 50}}>
                 <Entypo name="controller-play" size={24} color="#40c351" />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity onPress={pauseSound4}>
+              <TouchableOpacity onPress={pauseSound4} style={{borderWidth: 1, borderColor : 'green', borderRadius : 50}}>
                 <Ionicons name="pause" size={24} color="#40c351" />
               </TouchableOpacity>
             )}
@@ -997,11 +997,11 @@ const Settings = () => {
           <View style={{ flexDirection : 'row', alignItems : 'center', justifyContent : 'space-around' }}>
             <View style={{ flexDirection : 'row', alignItems : 'center' }}>
             {!isPlaying5 ? (
-              <TouchableOpacity onPress={playSound5}>
+              <TouchableOpacity onPress={playSound5} style={{borderWidth: 1, borderColor : 'green', borderRadius : 50}}>
                 <Entypo name="controller-play" size={24} color="#40c351" />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity onPress={pauseSound5}>
+              <TouchableOpacity onPress={pauseSound5} style={{borderWidth: 1, borderColor : 'green', borderRadius : 50}}>
                 <Ionicons name="pause" size={24} color="#40c351" />
               </TouchableOpacity>
             )}

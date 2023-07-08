@@ -104,9 +104,9 @@ export default JourneyDetails;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop : 15,
+    // marginTop : 15,
     flex: 1,
-    marginBottom: 80,
+    paddingBottom: 80,
     paddingTop: 15,
     backgroundColor: "white",
   },
