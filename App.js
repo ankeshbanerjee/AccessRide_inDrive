@@ -16,6 +16,8 @@ import JourneyDetails from "./screeens/JourneyDetails";
 import Register from "./screeens/Register";
 import Login from "./screeens/Login";
 import Welcome from "./screeens/Welcome";
+import SOS from "./screeens/SOS";
+
 const DriverDetailsStack = createNativeStackNavigator();
 
 function DriverDetailsStackScreen() {
@@ -104,6 +106,9 @@ export default function WelcomeStackScreen() {
         
       </Stack.Screen>
       <Stack.Screen name='Register' component={Register}>
+        
+        </Stack.Screen>
+        <Stack.Screen name='SOS' component={SOS}>
         
         </Stack.Screen>
     </Stack.Navigator>
