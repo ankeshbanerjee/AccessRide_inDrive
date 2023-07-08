@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: 80,
     // backgroundColor: "white",
+    backgroundColor: "white",
     // paddingBottom: 50,
   },
   // upperView: {

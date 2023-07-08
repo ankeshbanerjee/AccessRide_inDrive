@@ -133,7 +133,9 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: "white",
     marginTop: 15,
-    marginBottom : 80
+    marginBottom : 80,
+    backgroundColor: "white",
+    paddingTop: 15,
   },
   upperview: {
     flex: 0.8,

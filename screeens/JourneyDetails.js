@@ -1,21 +1,22 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import * as Haptics from "expo-haptics";
 import { Ionicons } from "@expo/vector-icons";
+import * as Speech from "expo-speech";
 import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView";
 import JourneyDetailsMap from "../components/JourneyDetailsMap";
 import Timer from "../components/Timer";
 import * as Linking from "expo-linking";
 import { Platform } from "react-native";
 
-const JourneyDetails = ({route, navigation}) => {
-  const getTime = (time)=>{
+const JourneyDetails = ({ route, navigation }) => {
+  const getTime = (time) => {
     const string1 = time;
     const string2 = " minutes";
-    const result = [...string1].filter(c => !string2.includes(c)).join('');
-    const number = parseInt(result)
+    const result = [...string1].filter((c) => !string2.includes(c)).join("");
+    const number = parseInt(result);
     return number;
-  }
+  };
   return (
     <View style={styles.container}>
       <Text
@@ -62,7 +63,25 @@ const JourneyDetails = ({route, navigation}) => {
         <TouchableOpacity
           style={[styles.btn, { backgroundColor: "#d9d9d9" }]}
           onPress={() => {
+            Speech.speak("Are you sure to cancel Booking?");
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+            Alert.alert("Cancel Ride", "Are you sure to cancel booking?", [
+              {
+                text: "YES  ",
+                onPress: () => {
+                  Speech.speak("Booking Canceled!");
+                  Haptics.notificationAsync(
+                    Haptics.NotificationFeedbackType.Success
+                  );
+                  navigation.navigate("HomeScreen", { screen: "Home" });
+                },
+              },
+              {
+                text: "NO",
+                onPress: () =>
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium),
+              },
+            ]);
           }}
         >
           <Text style={{ fontSize: 15 }}>Cancel Ride</Text>
@@ -88,6 +107,8 @@ const styles = StyleSheet.create({
     marginTop : 15,
     flex: 1,
     marginBottom: 80,
+    paddingTop: 15,
+    backgroundColor: "white",
   },
   btn: {
     alignSelf: "center",
