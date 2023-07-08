@@ -15,6 +15,10 @@ import * as Haptics from "expo-haptics";
 import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView";
 import * as Speech from "expo-speech";
 
+//importing data
+
+import { feedback } from "../data/feedbacks";
+
 const DriverDetails = ({ route, navigation }) => {
   const [feedback, setFeedback] = useState("");
   // const handleFeedbackPress = () => {
@@ -129,6 +133,9 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: "white",
     marginTop: 15,
+    marginBottom : 80,
+    backgroundColor: "white",
+    paddingTop: 15,
   },
   upperview: {
     flex: 0.8,

@@ -9,13 +9,14 @@ import * as Speech from 'expo-speech';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Home from "./screeens/Home";
 import Contact from "./screeens/Contact";
-import User from "./screeens/User";
+import UserProfile from "./screeens/UserProfile";
 import Drivers from "./screeens/Drivers";
 import DriverDetails from "./screeens/DriverDetails";
 import JourneyDetails from "./screeens/JourneyDetails";
 import Register from "./screeens/Register";
 import Login from "./screeens/Login";
 import Welcome from "./screeens/Welcome";
+import Settings from './screeens/Settings'
 
 
 import WelcomeStackScreen from "./navigation/WelcomeStackScreen";

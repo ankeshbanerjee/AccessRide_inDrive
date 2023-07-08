@@ -4,7 +4,8 @@ import { StyleSheet } from "react-native";
 
 import HomeStackScreen from "./HomeStackScreen";
 import Contact from "../screeens/Contact";
-import User from "../screeens/User";
+import UserProfile from "../screeens/UserProfile";
+import Settings from "../screeens/Settings";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -28,6 +29,8 @@ const TabNavigator = () => {
               iconName = focused ? "call" : "call-outline";
             } else if (route.name === "UserScreen") {
               iconName = focused ? "person" : "person-outline";
+            }else if (route.name === "SettingsScreen") {
+              iconName = focused ? "settings" : "settings-outline";
             }
 
             // You can return any component that you like here!
@@ -83,7 +86,7 @@ const TabNavigator = () => {
         />
         <Tab.Screen
           name="UserScreen"
-          component={User}
+          component={UserProfile}
           listeners={() => ({
             tabPress: () => {
               Speech.speak('User profile')
@@ -91,6 +94,17 @@ const TabNavigator = () => {
             },
           })}
           options={{title : "User profile"}}
+        />
+        <Tab.Screen
+          name="SettingsScreen"
+          component={Settings}
+          listeners={() => ({
+            tabPress: () => {
+              Speech.speak('Accessibility settings')
+              Haptics.selectionAsync();
+            },
+          })}
+          options={{title : "Accessibility settings"}}
         />
       </Tab.Navigator>
   );

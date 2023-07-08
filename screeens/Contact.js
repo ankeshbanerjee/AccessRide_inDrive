@@ -113,7 +113,9 @@ const Contact = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginBottom: 80,
     // backgroundColor: "white",
+    backgroundColor: "white",
     // paddingBottom: 50,
   },
   // upperView: {
