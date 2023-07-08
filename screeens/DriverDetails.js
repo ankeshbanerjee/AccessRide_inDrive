@@ -5,21 +5,27 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
-  ScrollView
+  ScrollView,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/FontAwesome";
 import * as Haptics from "expo-haptics";
 import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView";
+import * as Speech from "expo-speech";
+
+//importing data
+
+import { feedback } from "../data/feedbacks";
 
 const DriverDetails = ({ route, navigation }) => {
   const [feedback, setFeedback] = useState("");
-  const handleFeedbackPress = () => {
-    // Handle feedback button press
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    console.log("Give Feedback pressed");
-  };
+  // const handleFeedbackPress = () => {
+  //   // Handle feedback button press
+  //   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+  //   console.log("Give Feedback pressed");
+  // };
 
   const feedbacks = [
     "1. Very good",
@@ -28,7 +34,7 @@ const DriverDetails = ({ route, navigation }) => {
     "4. Helped me to walk",
   ];
 
-  const { name, currentLocation, rating } = route.params;
+  const { name, currentLocation, rating, arrivalTime } = route.params;
 
   return (
     <ScrollView style={styles.container}>
@@ -70,9 +76,10 @@ const DriverDetails = ({ route, navigation }) => {
               onChangeText={setFeedback}
               value={feedback}
               placeholder="Give Feeback"
-              onFocus={() =>
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
-              }
+              onFocus={() => {
+                Speech.speak("Give your kind feedback here");
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              }}
             />
             <FontAwesome
               name="microphone"
@@ -91,10 +98,14 @@ const DriverDetails = ({ route, navigation }) => {
             <TouchableOpacity
               style={styles.bookButton}
               onPress={() => {
+                Alert.alert("Booking successful!")
+                Speech.speak(
+                  "Booking successful! Wish you a safe and comfortable journey!"
+                );
                 Haptics.notificationAsync(
                   Haptics.NotificationFeedbackType.Success
                 );
-                navigation.navigate("JourneyDetails");
+                navigation.navigate("JourneyDetails", {time : arrivalTime});
               }}
             >
               <Text style={styles.buttonText}>Book</Text>
@@ -103,9 +114,10 @@ const DriverDetails = ({ route, navigation }) => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.rateButton}
-              onPress={() =>
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
-              }
+              onPress={() => {
+                Speech.speak("Rate us!");
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              }}
             >
               <Text style={styles.buttonText}>Rate</Text>
             </TouchableOpacity>
@@ -120,7 +132,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: "white",
-    marginTop : 15,
+    marginTop: 15,
     marginBottom : 80
   },
   upperview: {

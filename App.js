@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Haptics from "expo-haptics";
+import * as Speech from 'expo-speech';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Home from "./screeens/Home";
 import Contact from "./screeens/Contact";
@@ -142,6 +143,7 @@ export default function App() {
           component={HomeStackScreen}
           listeners={() => ({
             tabPress: () => {
+              Speech.speak('Home Screen')
               Haptics.selectionAsync();
             },
           })}
@@ -152,6 +154,7 @@ export default function App() {
           component={Contact}
           listeners={() => ({
             tabPress: () => {
+              Speech.speak('Help & Support')
               Haptics.selectionAsync();
             },
           })}
@@ -162,6 +165,7 @@ export default function App() {
           component={User}
           listeners={() => ({
             tabPress: () => {
+              Speech.speak('User profile')
               Haptics.selectionAsync();
             },
           })}

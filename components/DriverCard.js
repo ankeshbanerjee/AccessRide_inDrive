@@ -2,11 +2,16 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Entypo, FontAwesome } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import React from "react";
+import * as Speech from 'expo-speech';
 
 const DriverCard = (props) => {
   const { name, location, arrivalTime, rating, navigation } = props;
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={()=>{
+      const thingsToSay = `Driver's name is ${name}, rating is ${rating} star, driver's current location is ${location}, estimated arrival time is ${arrivalTime}`
+      Speech.speak(thingsToSay);
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    }}>
       <View
         style={{
           flexDirection: "row",
@@ -44,6 +49,7 @@ const DriverCard = (props) => {
           <TouchableOpacity
             style={styles.btn}
             onPress={() => {
+              Speech.speak(`Driver ${name}, with rating ${rating} star, selected. Now click on Book to confirm booking`);
               Haptics.notificationAsync(
                 Haptics.NotificationFeedbackType.Success
               );
@@ -53,6 +59,7 @@ const DriverCard = (props) => {
                   name: name,
                   currentLocation: location,
                   rating: rating,
+                  arrivalTime : arrivalTime
                 },
               });
             }}
@@ -61,7 +68,7 @@ const DriverCard = (props) => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
