@@ -16,192 +16,219 @@ import JourneyDetails from "./screeens/JourneyDetails";
 import Register from "./screeens/Register";
 import Login from "./screeens/Login";
 import Welcome from "./screeens/Welcome";
-const DriverDetailsStack = createNativeStackNavigator();
 
-function DriverDetailsStackScreen() {
-  return (
-    <DriverDetailsStack.Navigator
-      screenOptions={{
-        headerStyle: {
-            backgroundColor: "#b7ed55"
-          },
-          headerTintColor: "#000000",
-          headerTitleAlign: "center",
-          headerTitleStyle: {
-            fontWeight: 'bold'
-          },
-          headerShadowVisible: false,
-      }}
-    >
-      <DriverDetailsStack.Screen
-        name="DriverDetails"
-        component={DriverDetails}
-        options={{ title: "Driver's Details" }}
-      />
-      <DriverDetailsStack.Screen
-        name="JourneyDetails"
-        component={JourneyDetails}
-        options={{ title: "Your Journey Details" }}
-      />
-    </DriverDetailsStack.Navigator>
-  );
-}
-const DriversStack = createNativeStackNavigator();
 
-function DriversStackScreen() {
-  return (
-    <DriversStack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: "#b7ed55",
-        },
-        headerTintColor: "#000000",
-        headerTitleAlign: "center",
-        headerTitleStyle: {
-          fontWeight: 'bold'
-        },
-        headerShadowVisible: false,
-      }}
-    >
-      <DriversStack.Screen
-        name="Drivers"
-        component={Drivers}
-        options={{ title: "Available drivers"}}
-      />
-      <DriversStack.Screen
-        name="DriverDetailsScreen"
-        component={DriverDetailsStackScreen}
-        options={{ title: "Driver Details", headerShown: false }}
-      />
-    </DriversStack.Navigator>
-  );
-}
+import WelcomeStackScreen from "./navigation/WelcomeStackScreen";
+import TabNavigator from "./navigation/TabNavigator";
 
-const HomeStack = createNativeStackNavigator();
 
-function HomeStackScreen() {
-  return (
-    <HomeStack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <HomeStack.Screen name="Home" component={Home}/>
-      <HomeStack.Screen name="DriversScreen" component={DriversStackScreen} />
-    </HomeStack.Navigator>
-  );
-}
+// const DriverDetailsStack = createNativeStackNavigator();
 
-const WelcomeStack = createNativeStackNavigator();
-export default function WelcomeStackScreen() {
-  return (
-    <NavigationContainer>
-    <Stack.Navigator initialRouteName='Welcome'>
-      <Stack.Screen name='AccessRide' component={Welcome}>
+// function DriverDetailsStackScreen() {
+//   return (
+//     <DriverDetailsStack.Navigator
+//       screenOptions={{
+//         headerStyle: {
+//             backgroundColor: "#b7ed55"
+//           },
+//           headerTintColor: "#000000",
+//           headerTitleAlign: "center",
+//           headerTitleStyle: {
+//             fontWeight: 'bold'
+//           },
+//           headerShadowVisible: false,
+//       }}
+//     >
+//       <DriverDetailsStack.Screen
+//         name="DriverDetails"
+//         component={DriverDetails}
+//         options={{ title: "Driver's Details" }}
+//       />
+//       <DriverDetailsStack.Screen
+//         name="JourneyDetails"
+//         component={JourneyDetails}
+//         options={{ title: "Your Journey Details" }}
+//       />
+//     </DriverDetailsStack.Navigator>
+//   );
+// }
+// const DriversStack = createNativeStackNavigator();
+
+// function DriversStackScreen() {
+//   return (
+//     <DriversStack.Navigator
+//       screenOptions={{
+//         headerStyle: {
+//           backgroundColor: "#b7ed55",
+//         },
+//         headerTintColor: "#000000",
+//         headerTitleAlign: "center",
+//         headerTitleStyle: {
+//           fontWeight: 'bold'
+//         },
+//         headerShadowVisible: false,
+//       }}
+//     >
+//       <DriversStack.Screen
+//         name="Drivers"
+//         component={Drivers}
+//         options={{ title: "Available drivers"}}
+//       />
+//       <DriversStack.Screen
+//         name="DriverDetailsScreen"
+//         component={DriverDetailsStackScreen}
+//         options={{ title: "Driver Details", headerShown: false }}
+//       />
+//     </DriversStack.Navigator>
+//   );
+// }
+
+// const HomeStack = createNativeStackNavigator();
+
+// function HomeStackScreen() {
+//   return (
+//     <HomeStack.Navigator
+//       screenOptions={{
+//         headerShown: false,
+//       }}
+//     >
+//       <HomeStack.Screen name="Home" component={Home}/>
+//       <HomeStack.Screen name="DriversScreen" component={DriversStackScreen} />
+//     </HomeStack.Navigator>
+//   );
+// }
+
+// const WelcomeStack = createNativeStackNavigator();
+// export default function WelcomeStackScreen() {
+//   return (
+//     <NavigationContainer>
+//     <Stack.Navigator initialRouteName='Welcome'>
+//       <Stack.Screen name='AccessRide' component={Welcome}>
         
-      </Stack.Screen>
-      <Stack.Screen name='Login' component={Login}>
+//       </Stack.Screen>
+//       <Stack.Screen name='Login' component={Login}>
         
-      </Stack.Screen>
-      <Stack.Screen name='Register' component={Register}>
+//       </Stack.Screen>
+//       <Stack.Screen name='Register' component={Register}>
         
-        </Stack.Screen>
-    </Stack.Navigator>
-  </NavigationContainer>
-  );
-}
+//         </Stack.Screen>
+//     </Stack.Navigator>
+//   </NavigationContainer>
+//   );
+// }
 
-const Tab = createBottomTabNavigator();
+// const Tab = createBottomTabNavigator();
+
+// export default function App() {
+//   return (
+//     <NavigationContainer>
+//       <Tab.Navigator
+//         screenOptions={({ route }) => ({
+//           tabBarIcon: ({ focused, color, size }) => {
+//             let iconName;
+//             size = 30;
+
+//             if (route.name === "HomeScreen") {
+//               iconName = focused ? "home" : "home-outline";
+//             } else if (route.name === "ContactScreen") {
+//               iconName = focused ? "call" : "call-outline";
+//             } else if (route.name === "UserScreen") {
+//               iconName = focused ? "person" : "person-outline";
+//             }
+
+//             // You can return any component that you like here!
+//             return <Ionicons name={iconName} size={size} color={color} />;
+//           },
+//           headerStyle: {
+//             backgroundColor: "#b7ed55",
+//             // borderBottomLeftRadius : 15,
+//             // borderBottomRightRadius : 15,
+//             // height : 100
+//           },
+//           headerTintColor: "#000000",
+//           headerTitleAlign: "center",
+//           headerTitleStyle: {
+//             fontWeight: 'bold'
+//           },
+//           headerShadowVisible: false,
+//           tabBarActiveTintColor: "black",
+//           tabBarInactiveTintColor: "grey",
+//           tabBarShowLabel: false,
+//           tabBarHideOnKeyboard: true,
+//           tabBarStyle: {
+//             borderRadius: 10,
+//             backgroundColor: "#b7ed55",
+//             height: 60,
+//             position: "absolute",
+//             margin: 10,
+//             shadowColor: "white",
+//           },
+//         })}
+//       >
+//         <Tab.Screen
+//           name="HomeScreen"
+//           component={HomeStackScreen}
+//           listeners={() => ({
+//             tabPress: () => {
+//               Speech.speak('Home Screen')
+//               Haptics.selectionAsync();
+//             },
+//           })}
+//           options={{headerShown : false}}
+//         />
+//         <Tab.Screen
+//           name="ContactScreen"
+//           component={Contact}
+//           listeners={() => ({
+//             tabPress: () => {
+//               Speech.speak('Help & Support')
+//               Haptics.selectionAsync();
+//             },
+//           })}
+//           options={{title : "Help & Support"}}
+//         />
+//         <Tab.Screen
+//           name="UserScreen"
+//           component={User}
+//           listeners={() => ({
+//             tabPress: () => {
+//               Speech.speak('User profile')
+//               Haptics.selectionAsync();
+//             },
+//           })}
+//           options={{title : "User profile"}}
+//         />
+//       </Tab.Navigator>
+//     </NavigationContainer>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     height: "100%",
+//     backgroundColor: "#fff",
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+// });
+
+
+const Stack = createNativeStackNavigator()
+
 
 export default function App() {
-  return (
+
+  const user = true;
+  
+  return(
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            size = 30;
-
-            if (route.name === "HomeScreen") {
-              iconName = focused ? "home" : "home-outline";
-            } else if (route.name === "ContactScreen") {
-              iconName = focused ? "call" : "call-outline";
-            } else if (route.name === "UserScreen") {
-              iconName = focused ? "person" : "person-outline";
-            }
-
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-          headerStyle: {
-            backgroundColor: "#b7ed55",
-            // borderBottomLeftRadius : 15,
-            // borderBottomRightRadius : 15,
-            // height : 100
-          },
-          headerTintColor: "#000000",
-          headerTitleAlign: "center",
-          headerTitleStyle: {
-            fontWeight: 'bold'
-          },
-          headerShadowVisible: false,
-          tabBarActiveTintColor: "black",
-          tabBarInactiveTintColor: "grey",
-          tabBarShowLabel: false,
-          tabBarHideOnKeyboard: true,
-          tabBarStyle: {
-            borderRadius: 10,
-            backgroundColor: "#b7ed55",
-            height: 60,
-            position: "absolute",
-            margin: 10,
-            shadowColor: "white",
-          },
-        })}
-      >
-        <Tab.Screen
-          name="HomeScreen"
-          component={HomeStackScreen}
-          listeners={() => ({
-            tabPress: () => {
-              Speech.speak('Home Screen')
-              Haptics.selectionAsync();
-            },
-          })}
-          options={{headerShown : false}}
-        />
-        <Tab.Screen
-          name="ContactScreen"
-          component={Contact}
-          listeners={() => ({
-            tabPress: () => {
-              Speech.speak('Help & Support')
-              Haptics.selectionAsync();
-            },
-          })}
-          options={{title : "Help & Support"}}
-        />
-        <Tab.Screen
-          name="UserScreen"
-          component={User}
-          listeners={() => ({
-            tabPress: () => {
-              Speech.speak('User profile')
-              Haptics.selectionAsync();
-            },
-          })}
-          options={{title : "User profile"}}
-        />
-      </Tab.Navigator>
+      <Stack.Navigator>
+        {
+          !user ? (
+              <Stack.Screen name='Welcome' component={WelcomeStackScreen} options={{headerShown : false}}/>) :
+              <Stack.Screen name='Root' component={TabNavigator} options={{headerShown : false}}/>
+        }
+      </Stack.Navigator>
     </NavigationContainer>
-  );
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    height: "100%",
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
