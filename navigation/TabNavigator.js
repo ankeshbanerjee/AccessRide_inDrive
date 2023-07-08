@@ -6,6 +6,7 @@ import HomeStackScreen from "./HomeStackScreen";
 import Contact from "../screeens/Contact";
 import UserProfile from "../screeens/UserProfile";
 import Settings from "../screeens/Settings";
+import Inride from "../screeens/Inride";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
