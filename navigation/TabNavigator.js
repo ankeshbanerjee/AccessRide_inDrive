@@ -7,6 +7,8 @@ import Contact from "../screeens/Contact";
 import UserProfile from "../screeens/UserProfile";
 import Settings from "../screeens/Settings";
 import Inride from "../screeens/Inride";
+import RideHistory from "../screeens/RideHistory"
+import EmergencyContacts from '../screeens/EmergencyContacts'
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
