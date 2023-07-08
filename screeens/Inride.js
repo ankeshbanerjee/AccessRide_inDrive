@@ -6,8 +6,10 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  Share
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
+import { Entypo } from "@expo/vector-icons";
 
 const Inride = () => {
   const sourceLocation = {
@@ -69,93 +71,149 @@ const Inride = () => {
     setMessage((prevMessage) => prevMessage + " " + phrase);
   };
 
+  const shareRideDetails = async () => {
+    try {
+      const shareOptions = {
+        title: "Share Ride Details",
+        message: "I'm sharing the ride details with you.",
+        url: "https://example.com/ride-details", // Replace with the actual ride details URL
+      };
+  
+      const result = await Share.share(shareOptions);
+  
+      if (result.action === Share.sharedAction) {
+        // Share was successful
+        if (result.activityType) {
+          // Shared with activity type of result.activityType
+        } else {
+          // Shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // Share was dismissed/cancelled
+      }
+    } catch (error) {
+      console.error("Error sharing ride details:", error.message);
+    }
+  };
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.lowerView}>
-        <MapView style={styles.map} initialRegion={initialRegion}>
-          <Marker coordinate={sourceLocation} pinColor="green" />
-          <Marker coordinate={destinationLocation} pinColor="red" />
-        </MapView>
-        <View style={styles.detailsContainer}>
-          <View style={{ width : '100%', alignSelf : 'center', borderColor : 'black', borderWidth : 1, borderRadius : 10, alignItems : 'center', paddingBottom : 10}}>
-            <Text style={styles.currentLocationText}>
-              Current Location: Barrackpore
-            </Text>
-            <Text style={styles.remainingTimeText}>
-              Remaining Time: {remainingTime}
-            </Text>
-          </View>
-          <ScrollView style={styles.scrollView}>
-            <View style={styles.sectionContainer}>
-              <ScrollView
-                contentContainerStyle={styles.tagContainer}
-                showsVerticalScrollIndicator={false}
+    <View style={styles.container}>
+      <ScrollView>
+        <View style={styles.lowerView}>
+          <MapView style={styles.map} initialRegion={initialRegion}>
+            <Marker coordinate={sourceLocation} pinColor="green" />
+            <Marker coordinate={destinationLocation} pinColor="red" />
+          </MapView>
+          <View style={styles.detailsContainer}>
+            <View
+              style={{
+                width: "100%",
+                alignSelf: "center",
+                borderColor: "black",
+                borderWidth: 1,
+                borderRadius: 10,
+                alignItems: "center",
+                paddingBottom: 10,
+              }}
+            >
+              <Text style={styles.currentLocationText}>
+                Current Location: Barrackpore
+              </Text>
+              <Text style={styles.remainingTimeText}>
+                Remaining Time: {remainingTime}
+              </Text>
+            </View>
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#b7ed55",
+                alignSelf: "center",
+                flexDirection: "row",
+                padding: 15,
+                borderRadius: 15,
+                marginTop: 15,
+                alignItems: "center",
+              }}
+              onPress={shareRideDetails}
+            >
+              <Text
+                style={{ fontSize: 17, marginRight: 5, fontWeight: "bold" }}
               >
-                <Text style={styles.heading}>Commonly Used Phrases</Text>
-                <ScrollView>
-                  <View style={styles.tagContainer}>
-                    {customPhrases.map((phrase, index) => (
-                      <TouchableOpacity
-                        key={index}
-                        style={styles.tag}
-                        onPress={() => handleAddPhraseToMessage(phrase)}
-                      >
-                        <Text style={styles.tagText}>{phrase}</Text>
+                Share your ride details
+              </Text>
+              <Entypo name="share" size={20} color="black" />
+            </TouchableOpacity>
+            <ScrollView style={styles.scrollView}>
+              <View style={styles.sectionContainer}>
+                <ScrollView
+                  contentContainerStyle={styles.tagContainer}
+                  showsVerticalScrollIndicator={false}
+                >
+                  <Text style={styles.heading}>Commonly Used Phrases</Text>
+                  <ScrollView>
+                    <View style={styles.tagContainer}>
+                      {customPhrases.map((phrase, index) => (
                         <TouchableOpacity
-                          style={styles.deleteButton}
-                          onPress={() => handleDeletePhrase(index)}
+                          key={index}
+                          style={styles.tag}
+                          onPress={() => handleAddPhraseToMessage(phrase)}
                         >
-                          <Text style={styles.deleteButtonText}>x</Text>
+                          <Text style={styles.tagText}>{phrase}</Text>
+                          <TouchableOpacity
+                            style={styles.deleteButton}
+                            onPress={() => handleDeletePhrase(index)}
+                          >
+                            <Text style={styles.deleteButtonText}>x</Text>
+                          </TouchableOpacity>
                         </TouchableOpacity>
-                      </TouchableOpacity>
-                    ))}
+                      ))}
+                    </View>
+                  </ScrollView>
+
+                  <View style={styles.customPhraseContainer}>
+                    <TextInput
+                      style={styles.customPhraseInput}
+                      placeholder="Enter custom phrase"
+                      value={customPhrase}
+                      onChangeText={(text) => setCustomPhrase(text)}
+                    />
+                    <TouchableOpacity
+                      style={styles.addButton}
+                      onPress={handleAddPhrase}
+                    >
+                      <Text style={styles.addButtonText}>Add</Text>
+                    </TouchableOpacity>
                   </View>
                 </ScrollView>
-
-                <View style={styles.customPhraseContainer}>
-                  <TextInput
-                    style={styles.customPhraseInput}
-                    placeholder="Enter custom phrase"
-                    value={customPhrase}
-                    onChangeText={(text) => setCustomPhrase(text)}
-                  />
-                  <TouchableOpacity
-                    style={styles.addButton}
-                    onPress={handleAddPhrase}
-                  >
-                    <Text style={styles.addButtonText}>Add</Text>
-                  </TouchableOpacity>
-                </View>
-              </ScrollView>
-              <Text style={styles.heading}>Ask Your Driver</Text>
-              <View style={styles.messagingContainer}>
-                <ScrollView>
-                  {messages.map((msg, index) => (
-                    <Text key={index} style={styles.messageText}>
-                      {msg}
-                    </Text>
-                  ))}
-                </ScrollView>
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    style={styles.messageInput}
-                    placeholder="Type a message..."
-                    value={message}
-                    onChangeText={(text) => setMessage(text)}
-                  />
-                  <TouchableOpacity
-                    style={styles.sendButton}
-                    onPress={handleSendMessage}
-                  >
-                    <Text style={styles.sendButtonText}>Send</Text>
-                  </TouchableOpacity>
+                <Text style={styles.heading}>Ask Your Driver</Text>
+                <View style={styles.messagingContainer}>
+                  <ScrollView>
+                    {messages.map((msg, index) => (
+                      <Text key={index} style={styles.messageText}>
+                        {msg}
+                      </Text>
+                    ))}
+                  </ScrollView>
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      style={styles.messageInput}
+                      placeholder="Type a message..."
+                      value={message}
+                      onChangeText={(text) => setMessage(text)}
+                    />
+                    <TouchableOpacity
+                      style={styles.sendButton}
+                      onPress={handleSendMessage}
+                    >
+                      <Text style={styles.sendButtonText}>Send</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
-            </View>
-          </ScrollView>
+            </ScrollView>
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -173,7 +231,7 @@ const styles = StyleSheet.create({
   lowerView: {
     flex: 3,
     backgroundColor: "white",
-    paddingBottom: 75,
+    // paddingBottom: 75,
   },
   detailsContainer: {
     paddingHorizontal: 20,
