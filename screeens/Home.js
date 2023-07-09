@@ -64,7 +64,7 @@ const Home = ({ navigation }) => {
               style={styles.textInput}
               onChangeText={setSource}
               value={source}
-              placeholder={i18n.t("Pickup Location")}
+              placeholder="Pickup Location"
               onFocus={() => {
                 Speech.speak("Enter your current location");
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -82,7 +82,7 @@ const Home = ({ navigation }) => {
               style={styles.textInput}
               onChangeText={setDestination}
               value={destination}
-              placeholder={i18n.t("Drop Location")}
+              placeholder="Drop Location"
               onFocus={() => {
                 Speech.speak("Enter your destination");
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -97,12 +97,12 @@ const Home = ({ navigation }) => {
           </View>
         </View>
         <Text style={{ alignSelf: "center", fontSize: 25, margin: 15 }}>
-          {i18n.t("Select Your Ride")}
+          Select Your Ride
         </Text>
         <View style={styles.options}>
           <View style={{ alignItems: "center" }}>
             <MaterialCommunityIcons name="bike-fast" size={60} color="black" />
-            <Text>{i18n.t("Bike")}</Text>
+            <Text>Bike</Text>
             <RadioButton
               value="bike"
               status={checked === "bike" ? "checked" : "unchecked"}
@@ -115,7 +115,7 @@ const Home = ({ navigation }) => {
           </View>
           <View style={{ alignItems: "center" }}>
             <MaterialCommunityIcons name="rickshaw" size={65} color="black" />
-            <Text>{i18n.t("Auto-rickshaw")}</Text>
+            <Text>Auto-rickshaw</Text>
             <RadioButton
               value="rickshaw"
               status={checked === "rickshaw" ? "checked" : "unchecked"}
@@ -130,7 +130,7 @@ const Home = ({ navigation }) => {
         <View style={styles.options}>
           <View style={{ alignItems: "center" }}>
             <FontAwesome name="car" size={55} color="black" />
-            <Text>{i18n.t("Car")}</Text>
+            <Text>Car</Text>
             <RadioButton
               value="car"
               status={checked === "car" ? "checked" : "unchecked"}
@@ -143,7 +143,7 @@ const Home = ({ navigation }) => {
           </View>
           <View style={{ alignItems: "center" }}>
             <MaterialIcons name="wheelchair-pickup" size={60} color="black" />
-            <Text>{i18n.t("Wheelchair")}</Text>
+            <Text>Wheelchair</Text>
             {/* <Text>accessible car</Text> */}
             <RadioButton
               value="wheelchair"
@@ -184,7 +184,7 @@ const Home = ({ navigation }) => {
           fontSize: 20,
           fontWeight: "bold",
 
-         }}>{i18n.t("Search Drivers")}</Text>
+         }}>Search Drivers</Text>
         </TouchableOpacity>
       {/* </ReactNativeZoomableView> */}
     </ScrollView>
