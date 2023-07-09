@@ -36,7 +36,7 @@ const TabNavigator = () => {
             }else if (route.name === "SettingsScreen") {
               iconName = focused ? "settings" : "settings-outline";
             }else if (route.name === "EmergencyContacts") {
-              iconName = focused ? "alert-circle" : "alert-circle-outline";
+              iconName = focused ? "warning" : "warning-outline";
             }
 
             // You can return any component that you like here!

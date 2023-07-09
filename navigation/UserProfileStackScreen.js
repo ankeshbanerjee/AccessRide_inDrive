@@ -12,7 +12,7 @@ export default function UserProfileStackScreen() {
       }}
     >
       <UserProfileStack.Screen name="UserProfile" component={UserProfile}/>
-      <UserProfileStack.Screen name="RideHistory" component={RideHistory} />
+      <UserProfileStack.Screen name="RideHistory" component={RideHistory} options={{title : "Your Ride History"}}/>
     </UserProfileStack.Navigator>
   );
 }

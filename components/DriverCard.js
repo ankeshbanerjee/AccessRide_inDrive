@@ -57,7 +57,11 @@ const DriverCard = (props) => {
       <View
         style={{ flexDirection: "row", justifyContent: "space-between", paddingTop: 10 }}
       >
-        <TouchableOpacity style={styles.btn} onPress={() => setModalVisible(true)}>
+        <TouchableOpacity style={styles.btn} onPress={() => {
+          Speech.speak("Negotiate")
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+          setModalVisible(true)
+          }}>
           <Text style={{ fontWeight: "bold" }}>Negotiate</Text>
         </TouchableOpacity>
         <TouchableOpacity
