@@ -16,13 +16,12 @@ import * as ImagePicker from "expo-image-picker";
 
 //translation modules
 
-import { I18n } from 'i18n-js';
-import {en,hi,bn} from '../i18n'
+import { I18n } from "i18n-js";
+import { en, hi, bn } from "../i18n";
 
 import useStore from "../store";
 
-
-const UserProfile = () => {
+const UserProfile = ({navigation}) => {
   const [image, setImage] = useState(null); // Initialize with null
   const [dummyImage, setDummyImage] = useState(
     require("../assets/userImage.jpg")
@@ -117,7 +116,9 @@ const UserProfile = () => {
     return isPasswordVisible ? (
       <Text style={[styles.passwordText, styles.lightText]}>{password}</Text>
     ) : (
-      <Text style={[styles.passwordText, styles.lightText]}>{"*".repeat(password.length)}</Text>
+      <Text style={[styles.passwordText, styles.lightText]}>
+        {"*".repeat(password.length)}
+      </Text>
     );
   };
 
@@ -160,15 +161,19 @@ const UserProfile = () => {
         )} 
       >*/}
       <ScrollView style={styles.contentContainer}>
-        <View style={{height : 180}}>
-          {!image ? <Image
-            style={styles.profileImg}
-            source={require("../assets/propic.png")}
-          /> : <Image
-            style={styles.profileImg}
-            source={{uri : image}}/>
-          }
-          <TouchableOpacity style={styles.cameraIcon} onPress={()=>pickImage()}>
+        <View style={{ height: 180 }}>
+          {!image ? (
+            <Image
+              style={styles.profileImg}
+              source={require("../assets/propic.png")}
+            />
+          ) : (
+            <Image style={styles.profileImg} source={{ uri: image }} />
+          )}
+          <TouchableOpacity
+            style={styles.cameraIcon}
+            onPress={() => pickImage()}
+          >
             <Entypo name="camera" size={27} color="white" />
           </TouchableOpacity>
         </View>
@@ -216,16 +221,16 @@ const UserProfile = () => {
           <View style={styles.detailItem}>
             <Text style={styles.headingText}>Password</Text>
             <View style={styles.passwordContainer}>
-              {isEditing ? 
+              {isEditing ? (
                 <TextInput
                   style={styles.input}
                   value={password}
                   onChangeText={setPassword}
                   secureTextEntry={!isPasswordVisible}
                 />
-               : 
-                  renderPasswordText(password)
-              }
+              ) : (
+                renderPasswordText(password)
+              )}
 
               <TouchableOpacity
                 style={styles.visibilityIcon}
@@ -315,6 +320,9 @@ const UserProfile = () => {
             <Text style={styles.lightText}>Insulin</Text>
           </View>
         </View>
+        <TouchableOpacity style={styles.pastRidebtn} onPress={()=>navigation.navigate("RideHistory")}>
+          <Text style={{fontSize : 17, fontWeight : 'bold'}}>Click to see your past rides</Text>
+        </TouchableOpacity>
       </ScrollView>
       {/* </View> */}
       {/* <Animated.View
@@ -438,7 +446,7 @@ const styles = StyleSheet.create({
   passwordText: {
     // flex: 1,
     fontSize: 16,
-    paddingBottom : 11
+    paddingBottom: 11,
   },
   editButton: {
     // position: "absolute",
@@ -494,14 +502,23 @@ const styles = StyleSheet.create({
     height: 140,
     alignSelf: "center",
     marginTop: 20,
-    borderRadius : 140/2,
+    borderRadius: 140 / 2,
   },
   cameraIcon: {
     position: "absolute",
     top: 125,
     right: 125,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     padding: 10,
     borderRadius: 50,
+  },
+  pastRidebtn: {
+    padding: 10,
+    backgroundColor: "#b7ed55",
+    alignItems: "center",
+    width: "80%",
+    alignSelf: "center",
+    marginVertical: 10,
+    borderRadius: 10,
   },
 });

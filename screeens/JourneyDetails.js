@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import * as Haptics from "expo-haptics";
 import { Ionicons } from "@expo/vector-icons";
 import * as Speech from "expo-speech";
@@ -10,6 +10,12 @@ import * as Linking from "expo-linking";
 import { Platform } from "react-native";
 
 const JourneyDetails = ({ route, navigation }) => {
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.navigate("JourneyDetails", {screen : "Inride"});
+    }, 10000);
+  }, [navigation])
+  
   const getTime = (time) => {
     const string1 = time;
     const string2 = " minutes";
@@ -31,7 +37,7 @@ const JourneyDetails = ({ route, navigation }) => {
       <Text style={{ fontSize: 22, alignSelf: "center", marginVertical: 20 }}>
         Amount Payable : <Text style={{ fontWeight: "bold" }}>$250</Text>
       </Text>
-      <Timer time={getTime(route.params.time)} />
+      <Timer time={1/6} />
       <View
         style={{
           flexDirection: "row",

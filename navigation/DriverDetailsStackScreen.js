@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import DriverDetails from "../screeens/DriverDetails";
 import JourneyDetails from "../screeens/JourneyDetails";
+import JourneyDetailsStackScreen from "./JourneyDetailsStackScreen";
+
 
 const DriverDetailsStack = createNativeStackNavigator();
 
@@ -28,8 +30,8 @@ export default function DriverDetailsStackScreen() {
       />
       <DriverDetailsStack.Screen
         name="JourneyDetails"
-        component={JourneyDetails}
-        options={{ title: "Your Journey Details" }}
+        component={JourneyDetailsStackScreen}
+        options={{ title: "Your Journey Details", headerShown : false }}
       />
     </DriverDetailsStack.Navigator>
   );
