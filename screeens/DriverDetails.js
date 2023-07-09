@@ -145,7 +145,7 @@ const DriverDetails = ({ route, navigation }) => {
                 Haptics.notificationAsync(
                   Haptics.NotificationFeedbackType.Success
                 );
-                navigation.navigate("JourneyDetails", { time: arrivalTime });
+                navigation.navigate("JourneyDetails", {screen : "JourneyDetailsScreen"});
               }}
             >
               <Text style={styles.buttonText}>Book</Text>

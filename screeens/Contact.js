@@ -9,7 +9,7 @@ import React from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView";
 
-const Contact = () => {
+const Contact = ({navigation}) => {
   const [expanded, setExpanded] = React.useState(true);
 
   const handlePress = () => setExpanded(!expanded);
@@ -81,6 +81,9 @@ const Contact = () => {
             />
           </TouchableOpacity>
         </View>
+        <TouchableOpacity style={styles.communityForumbtn} onPress={()=>navigation.navigate("CommunityForumScreen")}>
+          <Text style={{fontSize : 17, fontWeight : 'bold'}}>Click to visit our Community Forum</Text>
+        </TouchableOpacity>
         <View style={styles.lowerView}>
           <View style={styles.contactContainer}>
             <Icon
@@ -198,7 +201,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    marginTop : 90
+    marginTop : 20
   },
   contactContainer: {
     flexDirection: "row",
@@ -211,6 +214,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "black",
+  },
+  communityForumbtn: {
+    padding: 10,
+    backgroundColor: "#b7ed55",
+    alignItems: "center",
+    width: "80%",
+    alignSelf: "center",
+    marginVertical: 10,
+    borderRadius: 10,
+    marginTop : 22
   },
 });
 

@@ -8,12 +8,15 @@ import UserProfile from "../screeens/UserProfile";
 import Settings from "../screeens/Settings";
 import EmergencyContacts from '../screeens/EmergencyContacts'
 import UserProfileStackScreen from "./UserProfileStackScreen";
+import ContactStackScreen from "./ContactStackScreen";
+import EmergencyStackScreen from "./EmergencyStackScreen";
 
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import * as Haptics from "expo-haptics";
 import * as Speech from 'expo-speech';
+
 
 
 
@@ -35,7 +38,7 @@ const TabNavigator = () => {
               iconName = focused ? "person" : "person-outline";
             }else if (route.name === "SettingsScreen") {
               iconName = focused ? "settings" : "settings-outline";
-            }else if (route.name === "EmergencyContacts") {
+            }else if (route.name === "EmergencyScreen") {
               iconName = focused ? "warning" : "warning-outline";
             }
 
@@ -81,14 +84,14 @@ const TabNavigator = () => {
         />
         <Tab.Screen
           name="ContactScreen"
-          component={Contact}
+          component={ContactStackScreen}
           listeners={() => ({
             tabPress: () => {
               Speech.speak('Help & Support')
               Haptics.selectionAsync();
             },
           })}
-          options={{title : "Help & Support"}}
+          options={{headerShown : false}}
         />
         <Tab.Screen
           name="UserScreen"
@@ -113,15 +116,15 @@ const TabNavigator = () => {
           options={{title : "Accessibility settings"}}
         />
         <Tab.Screen
-          name="EmergencyContacts"
-          component={EmergencyContacts}
+          name="EmergencyScreen"
+          component={EmergencyStackScreen}
           listeners={() => ({
             tabPress: () => {
               Speech.speak('Emergency Contacts')
               Haptics.selectionAsync();
             },
           })}
-          options={{title : "Emergency Contacts"}}
+          options={{title : "Emergency Contacts", headerShown : false}}
         />
       </Tab.Navigator>
   );

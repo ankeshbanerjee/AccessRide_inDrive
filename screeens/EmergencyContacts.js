@@ -9,9 +9,16 @@ import {
   ScrollView,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import * as Linking from 'expo-linking';
+import * as Linking from "expo-linking";
 
-const EmergencyContacts = () => {
+const Econtacts = ({navigation}) => {
+  const handleSOS = () => {
+    // Handle SOS button press here
+    // This function will be called when the SOS button is pressed
+    // You can implement the logic to send distress signals or trigger emergency actions
+    // console.log("SOS button pressed");
+    navigation.navigate("EmergencyScreen", {screen : "EmergencyButtonScreen"})
+  };
   const [contacts, setContacts] = useState([
     {
       id: 1,
@@ -44,7 +51,11 @@ const EmergencyContacts = () => {
   const [filteredContacts, setFilteredContacts] = useState(contacts);
 
   const addContact = () => {
-    if (newContactName.trim() === "" || newContactPhoneNumber.trim() === "" || newCategory.trim() === "") {
+    if (
+      newContactName.trim() === "" ||
+      newContactPhoneNumber.trim() === "" ||
+      newCategory.trim() === ""
+    ) {
       // Alert or display an error message for empty fields
       return;
     }
@@ -64,11 +75,13 @@ const EmergencyContacts = () => {
 
   const removeContact = (contactId) => {
     setContacts(contacts.filter((contact) => contact.id !== contactId));
-    setFilteredContacts(filteredContacts.filter((contact) => contact.id !== contactId));
+    setFilteredContacts(
+      filteredContacts.filter((contact) => contact.id !== contactId)
+    );
   };
 
   const filterContactsByCategory = (category) => {
-    if (category === 'All'){
+    if (category === "All") {
       setFilteredContacts(contacts);
       return;
     }
@@ -80,12 +93,14 @@ const EmergencyContacts = () => {
 
   const renderContactItem = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.contactItemContainer} onPress={() => {
-        if(Platform.OS === 'android')
-          Linking.openURL(`tel:${item.phoneNumber}`);
-        else
-          Linking.openURL(`telprompt:${item.phoneNumber}`);
-      }}>
+      <TouchableOpacity
+        style={styles.contactItemContainer}
+        onPress={() => {
+          if (Platform.OS === "android")
+            Linking.openURL(`tel:${item.phoneNumber}`);
+          else Linking.openURL(`telprompt:${item.phoneNumber}`);
+        }}
+      >
         <Text style={styles.contactName}>{item.name}</Text>
         <Text style={styles.contactPhoneNumber}>{item.phoneNumber}</Text>
         <Text style={styles.contactCategory}>{item.category}</Text>
@@ -104,6 +119,9 @@ const EmergencyContacts = () => {
       {/* <View style={styles.upperView}></View> */}
       <View style={styles.lowerView}>
         <Text style={styles.heading}>Emergency Contacts</Text>
+        <TouchableOpacity onPress={handleSOS} style={styles.sosButton}>
+          <Text style={styles.sosButtonText}>SOS</Text>
+        </TouchableOpacity>
         <View style={styles.filterButtonsContainer}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <TouchableOpacity
@@ -179,7 +197,7 @@ const EmergencyContacts = () => {
   );
 };
 
-export default EmergencyContacts;
+export default Econtacts;
 
 const styles = StyleSheet.create({
   container: {
@@ -222,7 +240,7 @@ const styles = StyleSheet.create({
     color: "#888888",
     marginRight: 10,
   },
-  contactCategory:{
+  contactCategory: {
     fontSize: 14,
     color: "#888888",
   },
@@ -267,5 +285,18 @@ const styles = StyleSheet.create({
   addButtonLabel: {
     color: "white",
     fontWeight: "bold",
+  },
+  sosButton: {
+    position: "absolute",
+    top: 10,
+    right: 20,
+    backgroundColor: "red",
+    borderRadius: 50,
+    padding : 15
+  },
+  sosButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });
