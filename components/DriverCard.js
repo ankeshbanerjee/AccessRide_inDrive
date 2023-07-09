@@ -1,4 +1,12 @@
-import { StyleSheet, Text, View, TouchableOpacity, Modal, TextInput, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Modal,
+  TextInput,
+  Alert,
+} from "react-native";
 import { Entypo, FontAwesome } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import React, { useState } from "react";
@@ -55,13 +63,20 @@ const DriverCard = (props) => {
         </View>
       </View>
       <View
-        style={{ flexDirection: "row", justifyContent: "space-between", paddingTop: 10 }}
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          paddingTop: 10,
+        }}
       >
-        <TouchableOpacity style={styles.btn} onPress={() => {
-          Speech.speak("Negotiate")
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-          setModalVisible(true)
-          }}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => {
+            Speech.speak("Negotiate");
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            setModalVisible(true);
+          }}
+        >
           <Text style={{ fontWeight: "bold" }}>Negotiate</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -99,6 +114,12 @@ const DriverCard = (props) => {
       <Modal visible={modalVisible} animationType="slide" transparent>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setModalVisible(false)}
+            >
+              <FontAwesome name="times" size={24} color="black" />
+            </TouchableOpacity>
             <TextInput
               style={styles.input}
               placeholder="Offer your price"
@@ -111,9 +132,11 @@ const DriverCard = (props) => {
                 // Handle the submission of the negotiated value here
                 // You can access the negotiated value using the `negotiateValue` state variable
                 Speech.speak("Your offered price is sent to the driver");
-                Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+                Haptics.notificationAsync(
+                  Haptics.NotificationFeedbackType.Success
+                );
                 setModalVisible(false);
-                Alert.alert("Sent to the driver")
+                Alert.alert("Sent to the driver");
               }}
             >
               <Text style={styles.buttonText}>Submit</Text>
@@ -173,6 +196,11 @@ const styles = StyleSheet.create({
   buttonText: {
     fontWeight: "bold",
     // color: "#fff",
-    color : 'black'
+    color: "black",
+  },
+  closeButton: {
+    position: "absolute",
+    right: 0,
+    padding: 5,
   },
 });

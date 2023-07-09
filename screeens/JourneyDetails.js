@@ -13,7 +13,7 @@ const JourneyDetails = ({ route, navigation }) => {
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate("JourneyDetails", {screen : "Inride"});
-    }, 3000);
+    }, 10000);
   }, [navigation])
   
   const getTime = (time) => {
@@ -37,7 +37,7 @@ const JourneyDetails = ({ route, navigation }) => {
       <Text style={{ fontSize: 22, alignSelf: "center", marginVertical: 20 }}>
         Amount Payable : <Text style={{ fontWeight: "bold" }}>$250</Text>
       </Text>
-      <Timer time={1/20} />
+      <Timer time={1/6} />
       <View
         style={{
           flexDirection: "row",
