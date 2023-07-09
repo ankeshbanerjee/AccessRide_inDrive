@@ -14,6 +14,9 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import * as Haptics from "expo-haptics";
 import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView";
 import * as Speech from "expo-speech";
+import Voice from "@react-native-voice/voice";
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["new NativeEventEmitter"]); // Ignore log notification by message
 
 //importing data
 
@@ -36,6 +39,30 @@ const DriverDetails = ({ route, navigation }) => {
 
   const { name, currentLocation, rating, arrivalTime } = route.params;
 
+  // speech-to-text feedback
+  const [error, setError] = useState("");
+  const [isRecordingFeedback, setIsRecordingFeedback] = useState(false);
+
+  Voice.onSpeechStart = () => setIsRecordingFeedback(true);
+  Voice.onSpeechEnd = () => setIsRecordingFeedback(false);
+  Voice.onSpeechError = (err) => setError(err.error);
+  Voice.onSpeechResults = (feedback) => setFeedback(feedback.value[0]);
+
+  const startRecording = async () => {
+    try {
+      await Voice.start("en-US");
+    } catch (err) {
+      setError(err);
+    }
+  };
+
+  const stopRecording = async () => {
+    try {
+      await Voice.stop();
+    } catch (err) {
+      setError(err);
+    }
+  };
   return (
     <ScrollView style={styles.container}>
       <ReactNativeZoomableView
@@ -81,12 +108,25 @@ const DriverDetails = ({ route, navigation }) => {
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
               }}
             />
-            <FontAwesome
-              name="microphone"
-              size={24}
-              color="black"
-              style={{ marginRight: 10 }}
-            />
+            <TouchableOpacity
+            onPress={isRecordingFeedback ? stopRecording : startRecording}
+          >
+            {isRecordingFeedback ? (
+              <FontAwesome
+                name="microphone-slash"
+                size={24}
+                color="black"
+                style={{ marginRight: 10 }}
+              />
+            ) : (
+              <FontAwesome
+                name="microphone"
+                size={24}
+                color="black"
+                style={{ marginRight: 10 }}
+              />
+            )}
+          </TouchableOpacity>
           </View>
           <Text style={styles.customerFeedbackHeading}>Customer Feedback:</Text>
           {feedbacks.map((feedback, index) => (
@@ -98,14 +138,14 @@ const DriverDetails = ({ route, navigation }) => {
             <TouchableOpacity
               style={styles.bookButton}
               onPress={() => {
-                Alert.alert("Booking successful!")
+                Alert.alert("Booking successful!");
                 Speech.speak(
                   "Booking successful! Wish you a safe and comfortable journey!"
                 );
                 Haptics.notificationAsync(
                   Haptics.NotificationFeedbackType.Success
                 );
-                navigation.navigate("JourneyDetails", {time : arrivalTime});
+                navigation.navigate("JourneyDetails", { time: arrivalTime });
               }}
             >
               <Text style={styles.buttonText}>Book</Text>
@@ -133,7 +173,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: "white",
     // marginTop: 15,
-    PaddingBottom : 80,
+    PaddingBottom: 80,
     backgroundColor: "white",
     paddingTop: 15,
   },
