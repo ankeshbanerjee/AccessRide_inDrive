@@ -6,14 +6,15 @@ import HomeStackScreen from "./HomeStackScreen";
 import Contact from "../screeens/Contact";
 import UserProfile from "../screeens/UserProfile";
 import Settings from "../screeens/Settings";
-import Inride from "../screeens/Inride";
-import RideHistory from "../screeens/RideHistory"
 import EmergencyContacts from '../screeens/EmergencyContacts'
+import UserProfileStackScreen from "./UserProfileStackScreen";
+
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import * as Haptics from "expo-haptics";
 import * as Speech from 'expo-speech';
+
 
 
 const Tab = createBottomTabNavigator();
@@ -34,6 +35,8 @@ const TabNavigator = () => {
               iconName = focused ? "person" : "person-outline";
             }else if (route.name === "SettingsScreen") {
               iconName = focused ? "settings" : "settings-outline";
+            }else if (route.name === "EmergencyContacts") {
+              iconName = focused ? "alert-circle" : "alert-circle-outline";
             }
 
             // You can return any component that you like here!
@@ -89,7 +92,7 @@ const TabNavigator = () => {
         />
         <Tab.Screen
           name="UserScreen"
-          component={UserProfile}
+          component={UserProfileStackScreen}
           listeners={() => ({
             tabPress: () => {
               Speech.speak('User profile')
@@ -108,6 +111,17 @@ const TabNavigator = () => {
             },
           })}
           options={{title : "Accessibility settings"}}
+        />
+        <Tab.Screen
+          name="EmergencyContacts"
+          component={EmergencyContacts}
+          listeners={() => ({
+            tabPress: () => {
+              Speech.speak('Emergency Contacts')
+              Haptics.selectionAsync();
+            },
+          })}
+          options={{title : "Emergency Contacts"}}
         />
       </Tab.Navigator>
   );
