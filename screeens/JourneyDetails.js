@@ -1,5 +1,12 @@
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
-import React, { useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
+import React, { useEffect, useState, useContext } from "react";
 import * as Haptics from "expo-haptics";
 import { Ionicons } from "@expo/vector-icons";
 import * as Speech from "expo-speech";
@@ -8,21 +15,53 @@ import JourneyDetailsMap from "../components/JourneyDetailsMap";
 import Timer from "../components/Timer";
 import * as Linking from "expo-linking";
 import { Platform } from "react-native";
+import { LocationContext } from "../context/LocationContext";
 
 const JourneyDetails = ({ route, navigation }) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate("JourneyDetails", {screen : "Inride"});
+      navigation.navigate("JourneyDetails", {
+        screen: "Inride"
+      });
     }, 10000);
-  }, [navigation])
-  
-  const getTime = (time) => {
-    const string1 = time;
-    const string2 = " minutes";
-    const result = [...string1].filter((c) => !string2.includes(c)).join("");
-    const number = parseInt(result);
-    return number;
+  }, [navigation]);
+
+  // const getTime = (time) => {
+  //   const string1 = time;
+  //   const string2 = " minutes";
+  //   const result = [...string1].filter((c) => !string2.includes(c)).join("");
+  //   const number = parseInt(result);
+  //   return number;
+  // };
+
+  const { source, destination } = useContext(LocationContext);
+  const [sourceLat, setSourceLat] = useState(null);
+  const [sourceLng, setSourceLng] = useState(null);
+  const [destLat, setDestLat] = useState(null);
+  const [destLng, setDestLng] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const getCoord = async () => {
+    setLoading(true);
+    let responseSource = await fetch(
+      `https://api.opencagedata.com/geocode/v1/json?q=${source}&key=6dfb23223ce04bffbe1598a65fb33d93`
+    );
+    let dataSource = await responseSource.json();
+    setSourceLat(dataSource.results[0].geometry.lat);
+    setSourceLng(dataSource.results[0].geometry.lng);
+    let responseDest = await fetch(
+      `https://api.opencagedata.com/geocode/v1/json?q=${destination}&key=6dfb23223ce04bffbe1598a65fb33d93`
+    );
+    let dataDest = await responseDest.json();
+    setLoading(false);
+    setDestLat(dataDest.results[0].geometry.lat);
+    setDestLng(dataDest.results[0].geometry.lng);
   };
+
+  useEffect(() => {
+    getCoord();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text
@@ -33,11 +72,19 @@ const JourneyDetails = ({ route, navigation }) => {
       >
         Wish you a safe journey!
       </Text>
-      <JourneyDetailsMap />
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          color="#00ff00"
+          style={{ paddingVertical: 20 }}
+        />
+      ) : (
+        <JourneyDetailsMap coord={{ sourceLat, sourceLng, destLat, destLng }} />
+      )}
       <Text style={{ fontSize: 22, alignSelf: "center", marginVertical: 20 }}>
         Amount Payable : <Text style={{ fontWeight: "bold" }}>$250</Text>
       </Text>
-      <Timer time={1/6} />
+      <Timer time={1 / 6} />
       <View
         style={{
           flexDirection: "row",
@@ -48,13 +95,13 @@ const JourneyDetails = ({ route, navigation }) => {
       >
         <Text style={{ fontSize: 20 }}>Contact Driver: </Text>
         <Ionicons name="md-call" size={24} color="black" />
-        <TouchableOpacity selectable style={{ fontSize: 20, fontWeight: "bold" }}
-        onPress={() => {
-          if(Platform.OS === 'android')
-            Linking.openURL(`tel:${9007361795}`);
-          else
-            Linking.openURL(`telprompt:${9007361795}`);
-        }}
+        <TouchableOpacity
+          selectable
+          style={{ fontSize: 20, fontWeight: "bold" }}
+          onPress={() => {
+            if (Platform.OS === "android") Linking.openURL(`tel:${9007361795}`);
+            else Linking.openURL(`telprompt:${9007361795}`);
+          }}
         >
           <Text>0123456789</Text>
         </TouchableOpacity>

@@ -102,7 +102,7 @@ const TabNavigator = () => {
               Haptics.selectionAsync();
             },
           })}
-          options={{title : "User profile"}}
+          options={{headerShown : false}}
         />
         <Tab.Screen
           name="SettingsScreen"

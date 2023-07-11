@@ -8,11 +8,19 @@ export default function UserProfileStackScreen() {
   return (
     <UserProfileStack.Navigator
       screenOptions={{
-        headerShown: false,
+        headerStyle: {
+          backgroundColor: "#b7ed55",
+        },
+        headerTintColor: "#000000",
+        headerTitleAlign: "center",
+        headerTitleStyle: {
+          fontWeight: 'bold'
+        },
+        headerShadowVisible: false,
       }}
     >
-      <UserProfileStack.Screen name="UserProfile" component={UserProfile}/>
-      <UserProfileStack.Screen name="RideHistory" component={RideHistory} options={{title : "Your Ride History"}}/>
+      <UserProfileStack.Screen name="UserProfile" component={UserProfile} options={{title : "Your Profile"}}/>
+      <UserProfileStack.Screen name="RideHistory" component={RideHistory} options={{title : "Past Rides"}}/>
     </UserProfileStack.Navigator>
   );
 }

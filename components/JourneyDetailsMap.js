@@ -1,18 +1,22 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import { StyleSheet, View } from "react-native";
+import { LocationContext } from "../context/LocationContext";
 
-export default function JourneyDetailsMap() {
+export default function JourneyDetailsMap({coord}) {
+  const sourceName = useContext(LocationContext).source;
+  const destinationName = useContext(LocationContext).destination;
+
   const mapRef = useRef();
-
+  const {sourceLat, sourceLng, destLat, destLng} = coord;
   const source = {
-    latitude: 22.975084,
-    longitude: 88.434509,
+    latitude: sourceLat,
+    longitude: sourceLng,
   };
 
   const destination = {
-    latitude: 22.5726,
-    longitude: 88.3639,
+    latitude: destLat,
+    longitude: destLng,
   };
 
   const markers = [
@@ -33,6 +37,7 @@ export default function JourneyDetailsMap() {
     }
   }, []);
 
+
   return (
     <View style={styles.container}>
       <MapView
@@ -47,15 +52,17 @@ export default function JourneyDetailsMap() {
       >
         <Marker
           coordinate={source}
-          title="Source"
+          title={sourceName}
           key="Source"
           description="This is the source"
+          pinColor="green"
         />
         <Marker
           coordinate={destination}
-          title="Destination"
+          title={destinationName}
           key="Destination"
           description="This is the destination"
+          pinColor="red"
         />
 
         <Polyline

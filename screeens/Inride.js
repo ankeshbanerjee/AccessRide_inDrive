@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import MapView, { Marker } from "react-native-maps";
 import { Entypo } from "@expo/vector-icons";
 
 const Inride = () => {
+
   const sourceLocation = {
     latitude: 22.9914, // Latitude of the source location
     longitude: 88.4488, // Longitude of the source location

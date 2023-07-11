@@ -16,7 +16,7 @@ import {
 } from "@expo/vector-icons";
 import { Entypo } from '@expo/vector-icons'; 
 
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { RadioButton } from "react-native-paper";
 import * as Haptics from "expo-haptics";
 import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView";
@@ -24,6 +24,7 @@ import * as Speech from "expo-speech";
 import Voice from "@react-native-voice/voice";
 import { LogBox } from "react-native";
 LogBox.ignoreLogs(["new NativeEventEmitter"]); // Ignore log notification by message
+import { LocationContext } from "../context/LocationContext";
 
 //translation modules
 
@@ -33,8 +34,9 @@ import { en, hi, bn } from "../i18n";
 import useStore from "../store";
 
 const Home = ({ navigation }) => {
-  const [source, setSource] = useState("");
-  const [destination, setDestination] = useState("");
+  const {source, setSource, destination, setDestination} = useContext(LocationContext)
+  // const [source, setSource] = useState("");
+  // const [destination, setDestination] = useState("");
   const [checked, setChecked] = React.useState("");
 
   //localization
