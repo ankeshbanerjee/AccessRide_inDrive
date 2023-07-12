@@ -34,33 +34,35 @@ const JourneyDetails = ({ route, navigation }) => {
   //   return number;
   // };
 
-  const { source, destination } = useContext(LocationContext);
-  const [sourceLat, setSourceLat] = useState(null);
-  const [sourceLng, setSourceLng] = useState(null);
-  const [destLat, setDestLat] = useState(null);
-  const [destLng, setDestLng] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const { source, destination } = useContext(LocationContext);
+  // const [sourceLat, setSourceLat] = useState(null);
+  // const [sourceLng, setSourceLng] = useState(null);
+  // const [destLat, setDestLat] = useState(null);
+  // const [destLng, setDestLng] = useState(null);
+  // const [loading, setLoading] = useState(true);
 
-  const getCoord = async () => {
-    setLoading(true);
-    let responseSource = await fetch(
-      `https://api.opencagedata.com/geocode/v1/json?q=${source}&key=6dfb23223ce04bffbe1598a65fb33d93`
-    );
-    let dataSource = await responseSource.json();
-    setSourceLat(dataSource.results[0].geometry.lat);
-    setSourceLng(dataSource.results[0].geometry.lng);
-    let responseDest = await fetch(
-      `https://api.opencagedata.com/geocode/v1/json?q=${destination}&key=6dfb23223ce04bffbe1598a65fb33d93`
-    );
-    let dataDest = await responseDest.json();
-    setLoading(false);
-    setDestLat(dataDest.results[0].geometry.lat);
-    setDestLng(dataDest.results[0].geometry.lng);
-  };
+  // const getCoord = async () => {
+  //   setLoading(true);
+  //   let responseSource = await fetch(
+  //     `https://api.opencagedata.com/geocode/v1/json?q=${source}&key=6dfb23223ce04bffbe1598a65fb33d93`
+  //   );
+  //   let dataSource = await responseSource.json();
+  //   setSourceLat(dataSource.results[0].geometry.lat);
+  //   setSourceLng(dataSource.results[0].geometry.lng);
+  //   let responseDest = await fetch(
+  //     `https://api.opencagedata.com/geocode/v1/json?q=${destination}&key=6dfb23223ce04bffbe1598a65fb33d93`
+  //   );
+  //   let dataDest = await responseDest.json();
+  //   setLoading(false);
+  //   setDestLat(dataDest.results[0].geometry.lat);
+  //   setDestLng(dataDest.results[0].geometry.lng);
+  // };
 
-  useEffect(() => {
-    getCoord();
-  }, []);
+  // useEffect(() => {
+  //   getCoord();
+  // }, []);
+
+  const {sourceLat, sourceLng, destLat, destLng} = useContext(LocationContext)
 
   return (
     <View style={styles.container}>
@@ -72,7 +74,7 @@ const JourneyDetails = ({ route, navigation }) => {
       >
         Wish you a safe journey!
       </Text>
-      {loading ? (
+      {false ? (
         <ActivityIndicator
           size="large"
           color="#00ff00"

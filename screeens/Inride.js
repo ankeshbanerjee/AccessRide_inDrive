@@ -8,28 +8,31 @@ import {
   ScrollView,
   Share
 } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Polyline } from "react-native-maps";
 import { Entypo } from "@expo/vector-icons";
+import { LocationContext } from "../context/LocationContext";
 
 const Inride = () => {
 
+  const {sourceLat, sourceLng, destLat, destLng, source, destination} = useContext(LocationContext)
+
   const sourceLocation = {
-    latitude: 22.9914, // Latitude of the source location
-    longitude: 88.4488, // Longitude of the source location
+    latitude: sourceLat, // Latitude of the source location
+    longitude: sourceLng, // Longitude of the source location
   };
 
   const destinationLocation = {
-    latitude: 22.5982, // Latitude of the destination location
-    longitude: 88.3687, // Longitude of the destination location
+    latitude: destLat, // Latitude of the destination location
+    longitude: destLng, // Longitude of the destination location
   };
 
   const initialRegion = {
     latitude: (sourceLocation.latitude + destinationLocation.latitude) / 2, // Set the initial region to be centered between source and destination
     longitude: (sourceLocation.longitude + destinationLocation.longitude) / 2,
     latitudeDelta:
-      Math.abs(sourceLocation.latitude - destinationLocation.latitude) * 1.5, // Adjust the zoom level based on the distance between source and destination
+      Math.abs(sourceLocation.latitude - destinationLocation.latitude) * 1.7, // Adjust the zoom level based on the distance between source and destination
     longitudeDelta:
-      Math.abs(sourceLocation.longitude - destinationLocation.longitude) * 1.5,
+      Math.abs(sourceLocation.longitude - destinationLocation.longitude) * 1.7,
   };
 
   const currentLocation = {
@@ -102,8 +105,21 @@ const Inride = () => {
       <ScrollView>
         <View style={styles.lowerView}>
           <MapView style={styles.map} initialRegion={initialRegion}>
-            <Marker coordinate={sourceLocation} pinColor="green" />
-            <Marker coordinate={destinationLocation} pinColor="red" />
+            <Marker coordinate={sourceLocation} pinColor="green" key="currentLocation" title={source} description="Current Location"/>
+            <Marker coordinate={destinationLocation} pinColor="red" key="destination" title={destination} description="Destination"/>
+            <Polyline
+          coordinates={[sourceLocation, destinationLocation]}
+          strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
+          strokeColors={[
+            "#7F0000",
+            "#00000000", // no color, creates a "long" gradient between the previous and next coordinate
+            "#B24112",
+            "#E5845C",
+            "#238C23",
+            "#7F0000",
+          ]}
+          strokeWidth={6}
+        />
           </MapView>
           <View style={styles.detailsContainer}>
             <View

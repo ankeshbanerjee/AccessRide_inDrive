@@ -19,35 +19,45 @@ export default function JourneyDetailsMap({coord}) {
     longitude: destLng,
   };
 
-  const markers = [
-    { id: 1, ...source },
-    { id: 2, ...destination },
-  ];
+  // const markers = [
+  //   { id: 1, ...source },
+  //   { id: 2, ...destination },
+  // ];
 
-  useEffect(() => {
-    if (mapRef.current && markers.length > 0) {
-      const coordinates = markers.map((marker) => ({
-        latitude: marker.latitude,
-        longitude: marker.longitude,
-      }));
-      mapRef.current.fitToCoordinates(coordinates, {
-        edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
-        animated: true,
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (mapRef.current && markers.length > 0) {
+  //     const coordinates = markers.map((marker) => ({
+  //       latitude: marker.latitude,
+  //       longitude: marker.longitude,
+  //     }));
+  //     mapRef.current.fitToCoordinates(coordinates, {
+  //       edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
+  //       animated: true,
+  //     });
+  //   }
+  // }, []);
+
+  const initialRegion = {
+    latitude: (source.latitude + destination.latitude) / 2, // Set the initial region to be centered between source and destination
+    longitude: (source.longitude + destination.longitude) / 2,
+    latitudeDelta:
+      Math.abs(source.latitude - destination.latitude) * 1.7, // Adjust the zoom level based on the distance between source and destination
+    longitudeDelta:
+      Math.abs(source.longitude - destination.longitude) * 1.7,
+  };
 
 
   return (
     <View style={styles.container}>
       <MapView
         ref={mapRef}
-        initialRegion={{
-          latitude: source.latitude,
-          longitude: source.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
+        // initialRegion={{
+        //   latitude: source.latitude,
+        //   longitude: source.longitude,
+        //   latitudeDelta: 0.0922,
+        //   longitudeDelta: 0.0421,
+        // }}
+        initialRegion={initialRegion}
         style={styles.map}
       >
         <Marker

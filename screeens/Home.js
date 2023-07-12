@@ -25,6 +25,8 @@ import Voice from "@react-native-voice/voice";
 import { LogBox } from "react-native";
 LogBox.ignoreLogs(["new NativeEventEmitter"]); // Ignore log notification by message
 import { LocationContext } from "../context/LocationContext";
+import SourceInput from "../components/SourceInput";
+import DestinationInput from '../components/DestinationInput'
 
 //translation modules
 
@@ -51,30 +53,30 @@ const Home = ({ navigation }) => {
   i18n.translations = { en, bn };
   i18n.locale = locale;
 
-  // speech-to-text
-  const [error, setError] = useState("");
-  const [isRecordingDestination, setIsRecordingDestination] = useState(false);
+  // // speech-to-text
+  // const [error, setError] = useState("");
+  // const [isRecordingDestination, setIsRecordingDestination] = useState(false);
 
-  Voice.onSpeechStart = () => setIsRecordingDestination(true);
-  Voice.onSpeechEnd = () => setIsRecordingDestination(false);
-  Voice.onSpeechError = (err) => setError(err.error);
-  Voice.onSpeechResults = (destination) => setDestination(destination.value[0]);
+  // Voice.onSpeechStart = () => setIsRecordingDestination(true);
+  // Voice.onSpeechEnd = () => setIsRecordingDestination(false);
+  // Voice.onSpeechError = (err) => setError(err.error);
+  // Voice.onSpeechResults = (destination) => setDestination(destination.value[0]);
 
-  const startRecording = async () => {
-    try {
-      await Voice.start("en-US");
-    } catch (err) {
-      setError(err);
-    }
-  };
+  // const startRecording = async () => {
+  //   try {
+  //     await Voice.start("en-US");
+  //   } catch (err) {
+  //     setError(err);
+  //   }
+  // };
 
-  const stopRecording = async () => {
-    try {
-      await Voice.stop();
-    } catch (err) {
-      setError(err);
-    }
-  };
+  // const stopRecording = async () => {
+  //   try {
+  //     await Voice.stop();
+  //   } catch (err) {
+  //     setError(err);
+  //   }
+  // };
 
   return (
     <ScrollView style={styles.container}>
@@ -89,7 +91,7 @@ const Home = ({ navigation }) => {
       >
       <Text style={styles.header}>AccessRide</Text>
       <View style={{ alignSelf: "center" }}>
-        <View style={styles.inputContainer}>
+        {/* <View style={styles.inputContainer}>
           <TextInput
             style={styles.textInput}
             onChangeText={setSource}
@@ -106,9 +108,10 @@ const Home = ({ navigation }) => {
             color="black"
             style={{ marginRight: 10 }}
           /> */}
-          <Entypo name="home" size={24} color="black" />
-        </View>
-        <View style={styles.inputContainer}>
+          {/* <Entypo name="home" size={24} color="black" />
+        </View>  */}
+        <SourceInput />
+        {/* <View style={styles.inputContainer}>
           <TextInput
             style={styles.textInput}
             onChangeText={setDestination}
@@ -138,9 +141,10 @@ const Home = ({ navigation }) => {
               />
             )}
           </TouchableOpacity>
-        </View>
+        </View> */}
+        <DestinationInput/>
       </View>
-      <Text style={{ alignSelf: "center", fontSize: 25, margin: 15 }}>
+      <Text style={{ alignSelf: "center", fontSize: 25, margin: 15, zIndex : -1 }}>
         Select Your Ride
       </Text>
       <View style={styles.options}>
@@ -265,6 +269,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     margin: 10,
+    zIndex : -1
   },
   btn: {
     alignSelf: "center",
@@ -273,6 +278,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
     marginBottom: 10,
+    zIndex : -1
   },
   header: {
     alignSelf: "center",
