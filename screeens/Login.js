@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
   StyleSheet,
@@ -10,11 +10,30 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
-export default function Login({navigation}) {
+import { auth } from "../Firebase";
+import { useNavigation } from "@react-navigation/native";
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show,setShow]=useState(false)
   const [passwordVisible, setPasswordVisible] = useState(true);
+  const navigation=useNavigation()
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        navigation.navigate('SOS')
+      }
+    })
+  },[])
+  const handleLogin = () => {
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log('Logged in with:', user.email);
+      })
+      .catch(error => alert(error.message))
+  }
   return (
     <View style={styles.container}>
         <Text style={{ color: "#006600", fontSize: 40 ,marginBottom:60}}>Welcome Again!</Text>
@@ -52,7 +71,7 @@ export default function Login({navigation}) {
       <TouchableOpacity>
         <Text style={styles.forgot_button}>Forgot Password?</Text> 
       </TouchableOpacity> 
-      <TouchableOpacity style={styles.loginBtn}>
+      <TouchableOpacity onPress={handleLogin} style={styles.loginBtn}>
         <Text style={styles.loginText}>Log In</Text> 
 
       </TouchableOpacity> 

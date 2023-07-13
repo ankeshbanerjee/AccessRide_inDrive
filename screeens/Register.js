@@ -10,11 +10,20 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
+import { auth } from "../Firebase";
 export default function Register({navigation}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show,setShow]=useState(false)
   const [passwordVisible, setPasswordVisible] = useState(true);
+  const handleSignUp = () => {
+    auth.createUserWuthEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user
+        console.log( 'Registeres with:' ,user.email)
+      })
+    .catch(error=>alert(error.message))
+  }
   return (
     <View style={styles.container}>
         <Text style={{ color: "#006600", fontSize: 40 ,marginBottom:60}}>Welcome!</Text>
@@ -57,7 +66,7 @@ export default function Register({navigation}) {
         </TouchableOpacity>
       </View> 
      
-      <TouchableOpacity style={styles.loginBtn}>
+      <TouchableOpacity onPress={handleSignUp} style={styles.loginBtn}>
         <Text style={styles.loginText}>Register</Text> 
 
       </TouchableOpacity> 
