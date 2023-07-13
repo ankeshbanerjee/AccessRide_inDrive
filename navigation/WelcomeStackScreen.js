@@ -10,7 +10,7 @@ const WelcomeStack = createNativeStackNavigator();
 
 export default function WelcomeStackScreen() {
   return (
-    <WelcomeStack.Navigator initialRouteName='Welcome'>
+    <WelcomeStack.Navigator initialRouteName='Welcome' screenOptions={{headerShown : false}}>
       <WelcomeStack.Screen name='AccessRide' component={Welcome}>
         
       </WelcomeStack.Screen>

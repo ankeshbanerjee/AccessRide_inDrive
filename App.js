@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Vibration } from "react-native";
+import { StyleSheet, Text, View, Vibration, ActivityIndicator } from "react-native";
 import { PaperProvider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -18,9 +18,12 @@ import Register from "./screeens/Register";
 import Login from "./screeens/Login";
 import Welcome from "./screeens/Welcome";
 import Settings from "./screeens/Settings";
+import { app, auth } from "./firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
 
 import WelcomeStackScreen from "./navigation/WelcomeStackScreen";
 import TabNavigator from "./navigation/TabNavigator";
+import { useEffect, useState } from "react";
 
 // const DriverDetailsStack = createNativeStackNavigator();
 
@@ -215,27 +218,38 @@ import TabNavigator from "./navigation/TabNavigator";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const user = true;
+  const [isLoading, setisLoading] = useState(true)
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(true);
+      } else {
+        setUser(false);
+      }
+    });
+    setisLoading(false)
+  }, []);
 
   return (
     <LocationProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          {!user ? (
-            <Stack.Screen
-              name="Welcome"
-              component={WelcomeStackScreen}
-              options={{ headerShown: false }}
-            />
-          ) : (
-            <Stack.Screen
-              name="Root"
-              component={TabNavigator}
-              options={{ headerShown: false }}
-            />
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
+        <NavigationContainer>
+          <Stack.Navigator>
+            {!user ? (
+              <Stack.Screen
+                name="Welcome"
+                component={WelcomeStackScreen}
+                options={{ headerShown: false }}
+              />
+            ) : (
+              <Stack.Screen
+                name="Root"
+                component={TabNavigator}
+                options={{ headerShown: false }}
+              />
+            )}
+          </Stack.Navigator>
+        </NavigationContainer>
     </LocationProvider>
   );
 }

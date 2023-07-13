@@ -2,13 +2,12 @@ import { View, Text, Image, TouchableOpacity, } from 'react-native'
 import React from 'react'
 const Welcome= ({navigation}) => {
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, paddingTop : 45}}>
             <Image source={require('../assets/hero3.png')}
             style={{width:400,height:300}}
             />
             <View style={{
                 paddingHorizontal: 22,
-               
             }}>
                 <Text style={{
                     
