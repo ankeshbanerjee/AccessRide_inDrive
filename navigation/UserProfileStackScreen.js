@@ -5,11 +5,17 @@ import { Entypo } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { app, auth } from "../firebaseConfig";
 import { signOut } from "firebase/auth";
+import * as Speech from 'expo-speech';
+import * as Haptics from 'expo-haptics';
 
 const UserProfileStack = createNativeStackNavigator();
 
 export default function UserProfileStackScreen() {
   const handleSignOut = () => {
+    Haptics.notificationAsync(
+      Haptics.NotificationFeedbackType.Success
+    )
+    Speech.speak('signing out')
     signOut(auth)
       .then(() => {
         // Sign-out successful.

@@ -11,7 +11,8 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
-  Alert
+  Alert,
+  ScrollView
 } from "react-native";
 
 export default function Login({ navigation }) {
