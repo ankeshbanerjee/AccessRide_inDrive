@@ -56,7 +56,6 @@ const sourceInput = () => {
     fetchSources();
   }, [destination]);
 
-
   // speech-to-text
   const [error, setError] = useState("");
   const [isRecordingDestination, setIsRecordingDestination] = useState(false);
@@ -85,40 +84,40 @@ const sourceInput = () => {
   return (
     <>
       <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={setDestination}
-            value={destination}
-            placeholder="Drop Location"
-            onFocus={() => {
-              Speech.speak("Enter your destination");
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-            }}
-          />
-          <TouchableOpacity
-            onPress={isRecordingDestination ? stopRecording : startRecording}
-          >
-            {isRecordingDestination ? (
-              <FontAwesome
-                name="microphone-slash"
-                size={24}
-                color="black"
-                style={{ marginRight: 10 }}
-              />
-            ) : (
-              <FontAwesome
-                name="microphone"
-                size={24}
-                color="black"
-                style={{ marginRight: 10 }}
-              />
-            )}
-          </TouchableOpacity>
-        </View>
+        <TextInput
+          style={styles.textInput}
+          onChangeText={setDestination}
+          value={destination}
+          placeholder="Drop Location"
+          onFocus={() => {
+            Speech.speak("Enter your destination");
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+          }}
+        />
+        <TouchableOpacity
+          onPress={isRecordingDestination ? stopRecording : startRecording}
+        >
+          {isRecordingDestination ? (
+            <FontAwesome
+              name="microphone-slash"
+              size={24}
+              color="black"
+              style={{ marginRight: 10 }}
+            />
+          ) : (
+            <FontAwesome
+              name="microphone"
+              size={24}
+              color="black"
+              style={{ marginRight: 10 }}
+            />
+          )}
+        </TouchableOpacity>
+      </View>
       {destinationSelected && (
         <View
           style={{
-            // height: 150,
+            // height: 470,
             width: "97.5%",
             position: "absolute",
             top: 151,
@@ -131,9 +130,11 @@ const sourceInput = () => {
               renderItem={({ item }) => <Suggestion place={item} />}
               keyExtractor={(item) => item.geometry.lat}
             /> */}
-          {destinations.map((item) => (
-            <Suggestion place={item} key={item.geometry.lat} />
-          ))}
+            <ScrollView>
+            {destinations.map((item) => (
+              <Suggestion place={item} key={item.geometry.lat} />
+            ))}
+            </ScrollView>
         </View>
       )}
     </>

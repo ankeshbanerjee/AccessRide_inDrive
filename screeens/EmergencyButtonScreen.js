@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Alert } from "react-native";
+import * as Linking from 'expo-linking';
 
-const EmergencyButtonScreen = () => {
+const EmergencyButtonScreen = ({route}) => {
   const [isButtonPressed, setIsButtonPressed] = useState(false);
 
   const handleEmergencyButtonPress = () => {
     // Perform actions when the emergency button is pressed
     setIsButtonPressed(true);
-
     // Send distress signals to emergency contacts and police station
-    sendDistressSignals();
+    // sendDistressSignals();
+    Linking.openURL(`tel:${route.params.sos}`)
   };
 
   const sendDistressSignals = () => {
@@ -17,9 +18,10 @@ const EmergencyButtonScreen = () => {
     setIsButtonPressed(true);
 
     // Simulating sending distress signals to emergency contacts and police station
-    setTimeout(() => {
-      Alert.alert("Help is on the way!", "Distress signals sent successfully.");
-    }, 2000);
+    // setTimeout(() => {
+    //   Alert.alert("Help is on the way!", "Distress signals sent successfully.");
+    // }, 2000);
+
   };
 
   return (

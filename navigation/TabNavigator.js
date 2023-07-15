@@ -62,7 +62,7 @@ const TabNavigator = () => {
           },
           headerShadowVisible: false,
           tabBarActiveTintColor: "black",
-          tabBarInactiveTintColor: "grey",
+          tabBarInactiveTintColor: "black",
           tabBarShowLabel: false,
           tabBarHideOnKeyboard: true,
           tabBarStyle: {
