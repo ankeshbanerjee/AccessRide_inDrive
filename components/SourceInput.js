@@ -10,8 +10,9 @@ import {
 import React, { useEffect, useState, useContext } from "react";
 import * as Haptics from "expo-haptics";
 import * as Speech from "expo-speech";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import { LocationContext } from "../context/LocationContext";
+import * as Location from "expo-location";
 
 const sourceInput = () => {
   const {
@@ -39,7 +40,7 @@ const sourceInput = () => {
         onPress={() => handleSelection(place)}
       >
         <Entypo name="location-pin" size={24} color="black" />
-        <Text style={{width : '95%'}}>{place.formatted}</Text>
+        <Text style={{ width: "95%" }}>{place.formatted}</Text>
       </TouchableOpacity>
     );
   };
@@ -55,6 +56,30 @@ const sourceInput = () => {
     fetchSources();
   }, [source]);
 
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  const getLocation = async () => {
+    Speech.speak("Getting your current location");
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      setErrorMsg("Permission to access location was denied");
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation(location);
+    setSourceLat(location.coords.latitude);
+    setSourceLng(location.coords.longitude);
+    let promise = await fetch(
+      `https://api.opencagedata.com/geocode/v1/json?q=${sourceLat}+${sourceLng}&key=6dfb23223ce04bffbe1598a65fb33d93`
+    );
+    let data = await promise.json();
+    setSource(data.results[0].formatted);
+    console.log(source);
+  };
+
   return (
     <>
       <View style={styles.inputContainer}>
@@ -67,10 +92,12 @@ const sourceInput = () => {
             Speech.speak("Enter your current location");
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
             // source.length ? setSourceSelected(true) : setSourceSelected(false);
-            setSourceSelected(true)
+            setSourceSelected(true);
           }}
         />
-        <Entypo name="home" size={24} color="black" />
+        <TouchableOpacity onPress={getLocation}>
+          <MaterialIcons name="my-location" size={24} color="black" />
+        </TouchableOpacity>
       </View>
       {sourceSelected && (
         <View
@@ -97,8 +124,6 @@ const sourceInput = () => {
   );
 };
 
-export default sourceInput;
-
 const styles = StyleSheet.create({
   textInput: {
     width: "87%",
@@ -122,8 +147,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "black",
     borderTopWidth: 0,
-    padding : 10,
-    flexDirection : 'row',
-    alignItems : 'center'
+    padding: 10,
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
+
+export default sourceInput;

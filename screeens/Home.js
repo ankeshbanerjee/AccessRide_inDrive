@@ -192,7 +192,7 @@ const Home = ({ navigation }) => {
         <View style={{ alignItems: "center" }}>
           <MaterialIcons name="wheelchair-pickup" size={60} color="black" />
           <Text>Wheelchair</Text>
-          {/* <Text>accessible car</Text> */}
+          <Text>accessible car</Text>
           <RadioButton
             value="wheelchair"
             status={checked === "wheelchair" ? "checked" : "unchecked"}

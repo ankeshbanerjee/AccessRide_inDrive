@@ -2,7 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import JourneyDetails from "../screeens/JourneyDetails";
-import Inride from "../screeens/Inride";
+import InrideStackScreen from "./InrideStackScreen";
 
 const JourneyDetailsStack = createNativeStackNavigator();
 
@@ -28,8 +28,8 @@ export default function JourneyDetailsStackScreen() {
       />
       <JourneyDetailsStack.Screen
         name="Inride"
-        component={Inride}
-        options={{ title: "Inride screen" }}
+        component={InrideStackScreen}
+        options={{ headerShown : false }}
       />
     </JourneyDetailsStack.Navigator>
   );

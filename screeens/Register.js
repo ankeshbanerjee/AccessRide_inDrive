@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { app, auth } from "../firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 export default function Register({ navigation }) {
   const [name, setName] = useState("");
@@ -19,19 +19,30 @@ export default function Register({ navigation }) {
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(true);
-  
+
   const handleSignUp = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
         console.log(user.email);
+        updateProfile(auth.currentUser, {
+          displayName: name,
+          photoURL:
+            "https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x",
+        })
+          .then(() => {
+            console.log(auth.currentUser.displayName, auth.currentUser.email)
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage);
-        Alert.alert("Email id already exists, try login!")
+        Alert.alert("Email id already exists, try login!");
       });
   };
 
