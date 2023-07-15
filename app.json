@@ -35,6 +35,7 @@
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
+<<<<<<< HEAD
       ],
       "@react-native-voice/voice"
     ],
@@ -44,5 +45,16 @@
       }
     },
     "owner": "dev_leena"
+=======
+      ], 
+      "@react-native-voice/voice",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
+      ]
+    ]
+>>>>>>> 88d5d547894237c2acce004ba364629e2d8dc923
   }
 }

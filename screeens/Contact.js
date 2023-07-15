@@ -8,6 +8,7 @@ import {
 import React from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView";
+import * as Linking from 'expo-linking';
 
 const Contact = ({navigation}) => {
   const [expanded, setExpanded] = React.useState(true);
@@ -85,7 +86,7 @@ const Contact = ({navigation}) => {
           <Text style={{fontSize : 17, fontWeight : 'bold'}}>Click to visit our Community Forum</Text>
         </TouchableOpacity>
         <View style={styles.lowerView}>
-          <View style={styles.contactContainer}>
+          <TouchableOpacity style={styles.contactContainer} onPress={()=>Linking.openURL('tel:+12345678910')}>
             <Icon
               name="phone"
               size={24}
@@ -95,8 +96,8 @@ const Contact = ({navigation}) => {
             <Text style={styles.contactText} selectable>
               +12345678910
             </Text>
-          </View>
-          <View style={styles.contactContainer}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.contactContainer} onPress={()=>Linking.openURL('mailto:xyz@gmail.com')}>
             <Icon
               name="email"
               size={24}
@@ -106,7 +107,7 @@ const Contact = ({navigation}) => {
             <Text style={styles.contactText} selectable>
               xyz@gmail.com
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </ReactNativeZoomableView>
     </ScrollView>
