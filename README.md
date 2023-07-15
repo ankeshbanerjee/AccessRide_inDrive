@@ -35,13 +35,13 @@ npx expo start
 
 ## Here is a glimpse of the AccessRide App 👇:
 <div style="display: flex;">
-    <img src="https://github.com/ankeshbanerjee/AccessRide_inDrive/assets/96008596/2d5de444-f6d6-4909-9488-8295092218e9" alt="Image 1" width="40%" height="40%">
-    <img src="https://github.com/ankeshbanerjee/AccessRide_inDrive/assets/96008596/1a3ddd58-d19a-42fb-9f75-5ddaf1799f3b" alt="Image 2" width="40%" height="40%">
+    <img src="https://github.com/ankeshbanerjee/AccessRide_inDrive/assets/96008596/2d5de444-f6d6-4909-9488-8295092218e9" alt="Image 1" width="45%" height="45%">
+    <img src="https://github.com/ankeshbanerjee/AccessRide_inDrive/assets/96008596/1a3ddd58-d19a-42fb-9f75-5ddaf1799f3b" alt="Image 2" width="45%" height="45%">
 </div>
 
 <div style="display: flex;">
-    <img src="https://github.com/ankeshbanerjee/AccessRide_inDrive/assets/96008596/3ddd732c-78ff-4e8e-980b-7bfe448d635a" alt="Image 3" width="40%" height="40%">
-    <img src="https://github.com/ankeshbanerjee/AccessRide_inDrive/assets/96008596/708b227e-d50e-46af-821f-d6c10b43ad2f" alt="Image 4" width="40%" height="40%">
+    <img src="https://github.com/ankeshbanerjee/AccessRide_inDrive/assets/96008596/3ddd732c-78ff-4e8e-980b-7bfe448d635a" alt="Image 3" width="45%" height="45%">
+    <img src="https://github.com/ankeshbanerjee/AccessRide_inDrive/assets/96008596/708b227e-d50e-46af-821f-d6c10b43ad2f" alt="Image 4" width="45%" height="45%">
 </div>
 
 
