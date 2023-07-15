@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -6,29 +6,37 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
-  Share
+  Share,
+  ClipboardStatic,
+  ToastAndroid
 } from "react-native";
-import MapView, { Marker } from "react-native-maps";
-import { Entypo } from "@expo/vector-icons";
+import MapView, { Marker, Polyline } from "react-native-maps";
+import { Entypo, Ionicons } from "@expo/vector-icons";
+import { LocationContext } from "../context/LocationContext";
+import * as Clipboard from 'expo-clipboard';
 
-const Inride = () => {
+
+const Inride = ({ navigation }) => {
+  const { sourceLat, sourceLng, destLat, destLng, source, destination } =
+    useContext(LocationContext);
+
   const sourceLocation = {
-    latitude: 22.9914, // Latitude of the source location
-    longitude: 88.4488, // Longitude of the source location
+    latitude: sourceLat, // Latitude of the source location
+    longitude: sourceLng, // Longitude of the source location
   };
 
   const destinationLocation = {
-    latitude: 22.5982, // Latitude of the destination location
-    longitude: 88.3687, // Longitude of the destination location
+    latitude: destLat, // Latitude of the destination location
+    longitude: destLng, // Longitude of the destination location
   };
 
   const initialRegion = {
     latitude: (sourceLocation.latitude + destinationLocation.latitude) / 2, // Set the initial region to be centered between source and destination
     longitude: (sourceLocation.longitude + destinationLocation.longitude) / 2,
     latitudeDelta:
-      Math.abs(sourceLocation.latitude - destinationLocation.latitude) * 1.5, // Adjust the zoom level based on the distance between source and destination
+      Math.abs(sourceLocation.latitude - destinationLocation.latitude) * 1.7, // Adjust the zoom level based on the distance between source and destination
     longitudeDelta:
-      Math.abs(sourceLocation.longitude - destinationLocation.longitude) * 1.5,
+      Math.abs(sourceLocation.longitude - destinationLocation.longitude) * 1.7,
   };
 
   const currentLocation = {
@@ -61,14 +69,17 @@ const Inride = () => {
   const [messages, setMessages] = useState([]);
 
   const handleSendMessage = () => {
-    if (message) {
-      setMessages([...messages, message]);
-      setMessage("");
-    }
+    // if (message) {
+    //   setMessages([...messages, message]);
+    //   setMessage("");
+    // }
+    navigation.navigate("ChatScreen");
   };
 
-  const handleAddPhraseToMessage = (phrase) => {
-    setMessage((prevMessage) => prevMessage + " " + phrase);
+  const handleAddPhraseToMessage = async (phrase) => {
+    // setMessage((prevMessage) => prevMessage + " " + phrase);
+    await Clipboard.setStringAsync(phrase);
+    ToastAndroid.show('Message copied to clipboard', ToastAndroid.SHORT);
   };
 
   const shareRideDetails = async () => {
@@ -78,9 +89,9 @@ const Inride = () => {
         message: "I'm sharing the ride details with you.",
         url: "https://example.com/ride-details", // Replace with the actual ride details URL
       };
-  
+
       const result = await Share.share(shareOptions);
-  
+
       if (result.action === Share.sharedAction) {
         // Share was successful
         if (result.activityType) {
@@ -101,8 +112,33 @@ const Inride = () => {
       <ScrollView>
         <View style={styles.lowerView}>
           <MapView style={styles.map} initialRegion={initialRegion}>
-            <Marker coordinate={sourceLocation} pinColor="green" />
-            <Marker coordinate={destinationLocation} pinColor="red" />
+            <Marker
+              coordinate={sourceLocation}
+              pinColor="green"
+              key="currentLocation"
+              title={source}
+              description="Current Location"
+            />
+            <Marker
+              coordinate={destinationLocation}
+              pinColor="red"
+              key="destination"
+              title={destination}
+              description="Destination"
+            />
+            <Polyline
+              coordinates={[sourceLocation, destinationLocation]}
+              strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
+              strokeColors={[
+                "#7F0000",
+                "#00000000", // no color, creates a "long" gradient between the previous and next coordinate
+                "#B24112",
+                "#E5845C",
+                "#238C23",
+                "#7F0000",
+              ]}
+              strokeWidth={6}
+            />
           </MapView>
           <View style={styles.detailsContainer}>
             <View
@@ -184,7 +220,7 @@ const Inride = () => {
                     </TouchableOpacity>
                   </View>
                 </ScrollView>
-                <Text style={styles.heading}>Ask Your Driver</Text>
+                {/* <Text style={styles.heading}>Ask Your Driver</Text>
                 <View style={styles.messagingContainer}>
                   <ScrollView>
                     {messages.map((msg, index) => (
@@ -207,7 +243,26 @@ const Inride = () => {
                       <Text style={styles.sendButtonText}>Send</Text>
                     </TouchableOpacity>
                   </View>
-                </View>
+                </View> */}
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "#b7ed55",
+                    alignSelf: "center",
+                    flexDirection: "row",
+                    padding: 15,
+                    borderRadius: 15,
+                    marginTop: 15,
+                    alignItems: "center",
+                  }}
+                  onPress={handleSendMessage}
+                >
+                  <Text
+                    style={{ fontSize: 17, marginRight: 5, fontWeight: "bold" }}
+                  >
+                    Ask Your Driver
+                  </Text>
+                  <Ionicons name="chatbubbles-sharp" size={24} color="black" />
+                </TouchableOpacity>
               </View>
             </ScrollView>
           </View>
@@ -225,7 +280,7 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
-    height: 230,
+    height: 200,
     margin: 10,
   },
   lowerView: {

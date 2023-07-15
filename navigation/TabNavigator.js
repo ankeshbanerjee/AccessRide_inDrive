@@ -10,6 +10,7 @@ import EmergencyContacts from '../screeens/EmergencyContacts'
 import UserProfileStackScreen from "./UserProfileStackScreen";
 import ContactStackScreen from "./ContactStackScreen";
 import EmergencyStackScreen from "./EmergencyStackScreen";
+import Chat from '../screeens/Chat'
 
 
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -41,6 +42,9 @@ const TabNavigator = () => {
             }else if (route.name === "EmergencyScreen") {
               iconName = focused ? "warning" : "warning-outline";
             }
+            // else if (route.name === "ChatScreen") {
+            //   iconName = focused ? "chatbubbles" : "chatbubbles-outline";
+            // }
 
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -58,7 +62,7 @@ const TabNavigator = () => {
           },
           headerShadowVisible: false,
           tabBarActiveTintColor: "black",
-          tabBarInactiveTintColor: "grey",
+          tabBarInactiveTintColor: "black",
           tabBarShowLabel: false,
           tabBarHideOnKeyboard: true,
           tabBarStyle: {
@@ -102,7 +106,7 @@ const TabNavigator = () => {
               Haptics.selectionAsync();
             },
           })}
-          options={{title : "User profile"}}
+          options={{headerShown : false}}
         />
         <Tab.Screen
           name="SettingsScreen"
@@ -126,6 +130,17 @@ const TabNavigator = () => {
           })}
           options={{title : "Emergency Contacts", headerShown : false}}
         />
+        {/* <Tab.Screen
+          name="ChatScreen"
+          component={Chat}
+          // listeners={() => ({
+          //   tabPress: () => {
+          //     Speech.speak('Emergency Contacts')
+          //     Haptics.selectionAsync();
+          //   },
+          // })}
+          options={{title : "Chat Screen"}}
+        /> */}
       </Tab.Navigator>
   );
 }

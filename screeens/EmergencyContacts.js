@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,77 +7,145 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  Alert
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import * as Linking from "expo-linking";
+import { auth, db } from "../firebaseConfig";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  collectionGroup,
+  onSnapshot,
+  doc,
+  deleteDoc,
+  getDoc,
+  query,
+  where,
+} from "firebase/firestore";
 
-const Econtacts = ({navigation}) => {
-  const handleSOS = () => {
-    // Handle SOS button press here
-    // This function will be called when the SOS button is pressed
-    // You can implement the logic to send distress signals or trigger emergency actions
-    // console.log("SOS button pressed");
-    navigation.navigate("EmergencyScreen", {screen : "EmergencyButtonScreen"})
-  };
-  const [contacts, setContacts] = useState([
-    {
-      id: 1,
-      name: "John Doe",
-      phoneNumber: "123-456-7890",
-      category: "Family Members",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      phoneNumber: "987-654-3210",
-      category: "Caregivers",
-    },
-    {
-      id: 3,
-      name: "Police Station",
-      phoneNumber: "911",
-      category: "Police Stations",
-    },
-    {
-      id: 4,
-      name: "Medical Professional",
-      phoneNumber: "123-123-1234",
-      category: "Medical Professionals",
-    },
-  ]);
+const Econtacts = ({ navigation }) => {
+  // const [contacts, setContacts] = useState([
+  //   {
+  //     id: 1,
+  //     name: "John Doe",
+  //     phoneNumber: "123-456-7890",
+  //     category: "Family Members",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Jane Smith",
+  //     phoneNumber: "987-654-3210",
+  //     category: "Caregivers",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Police Station",
+  //     phoneNumber: "911",
+  //     category: "Police Stations",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Medical Professional",
+  //     phoneNumber: "123-123-1234",
+  //     category: "Medical Professionals",
+  //   },
+  // ]);
+  const [contacts, setContacts] = useState([]);
+  // get contact
+
+  // useEffect(() => {
+  //   const fetchContacts = async () => {
+  //     const querySnapshot = await getDocs(collection(db, "emergencyContacts"));
+  //     let data = [];
+  //     querySnapshot.forEach((doc) => {
+  //       data.push(doc.data());
+  //     });
+  //     setContacts(data);
+  //     setFilteredContacts(data)
+  //   };
+  //   fetchContacts();
+  // }, []);
+
+  useEffect(() => {
+    onSnapshot(collection(db, "emergencyContacts"), (querySnapshot) => {
+      let data = [];
+      querySnapshot.forEach((doc) => {
+        data.push(doc.data());
+      });
+      setContacts(data);
+      setFilteredContacts(data);
+    });
+  }, []);
+
   const [newContactName, setNewContactName] = useState("");
   const [newContactPhoneNumber, setNewContactPhoneNumber] = useState("");
   const [newCategory, setNewCategory] = useState("");
   const [filteredContacts, setFilteredContacts] = useState(contacts);
 
-  const addContact = () => {
-    if (
-      newContactName.trim() === "" ||
-      newContactPhoneNumber.trim() === "" ||
-      newCategory.trim() === ""
-    ) {
-      // Alert or display an error message for empty fields
-      return;
+  // const addContact = () => {
+  //   if (
+  //     newContactName.trim() === "" ||
+  //     newContactPhoneNumber.trim() === "" ||
+  //     newCategory.trim() === ""
+  //   ) {
+  //     // Alert or display an error message for empty fields
+  //     return;
+  //   }
+
+  //   const newContact = {
+  //     id: contacts.length + 1,
+  //     name: newContactName,
+  //     phoneNumber: newContactPhoneNumber,
+  //     category: newCategory,
+  //   };
+
+  //   setContacts([...contacts, newContact]);
+  //   setNewContactName("");
+  //   setNewContactPhoneNumber("");
+  //   setNewCategory("");
+  // };
+
+  // add contact
+  const addContact = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "emergencyContacts"), {
+        id: contacts.length + 1,
+        contactName: newContactName,
+        phoneNo: newContactPhoneNumber,
+        category: newCategory,
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
     }
-
-    const newContact = {
-      id: contacts.length + 1,
-      name: newContactName,
-      phoneNumber: newContactPhoneNumber,
-      category: newCategory,
-    };
-
-    setContacts([...contacts, newContact]);
     setNewContactName("");
     setNewContactPhoneNumber("");
     setNewCategory("");
+    Alert.alert("Contact added!")
   };
 
-  const removeContact = (contactId) => {
-    setContacts(contacts.filter((contact) => contact.id !== contactId));
-    setFilteredContacts(
-      filteredContacts.filter((contact) => contact.id !== contactId)
+  // const removeContact = (contactId) => {
+  //   setContacts(contacts.filter((contact) => contact.id !== contactId));
+  //   setFilteredContacts(
+  //     filteredContacts.filter((contact) => contact.id !== contactId)
+  //   );
+  // };
+
+  const removeContact = async (contactId) => {
+    const q = query(
+      collection(db, "emergencyContacts"),
+      where("id", "==", contactId)
     );
+    const querySnapshot = await getDocs(q);
+    let idtoDel = '';
+    querySnapshot.forEach((doc) => {
+      idtoDel = doc.id;
+    });
+    // console.log(idtoDel);
+    await deleteDoc(doc(db, "emergencyContacts", idtoDel));
+    Alert.alert("Contact deleted!")
   };
 
   const filterContactsByCategory = (category) => {
@@ -96,13 +164,12 @@ const Econtacts = ({navigation}) => {
       <TouchableOpacity
         style={styles.contactItemContainer}
         onPress={() => {
-          if (Platform.OS === "android")
-            Linking.openURL(`tel:${item.phoneNumber}`);
-          else Linking.openURL(`telprompt:${item.phoneNumber}`);
+          if (Platform.OS === "android") Linking.openURL(`tel:${item.phoneNo}`);
+          else Linking.openURL(`telprompt:${item.phoneNo}`);
         }}
       >
-        <Text style={styles.contactName}>{item.name}</Text>
-        <Text style={styles.contactPhoneNumber}>{item.phoneNumber}</Text>
+        <Text style={styles.contactName}>{item.contactName}</Text>
+        <Text style={styles.contactPhoneNumber}>{item.phoneNo}</Text>
         <Text style={styles.contactCategory}>{item.category}</Text>
         <TouchableOpacity
           onPress={() => removeContact(item.id)}
@@ -112,6 +179,19 @@ const Econtacts = ({navigation}) => {
         </TouchableOpacity>
       </TouchableOpacity>
     );
+  };
+
+  const handleSOS = () => {
+    if (contacts.filter((item) => item.category === "SOS").length === 0){
+      Alert.alert("No SOS contact added!");
+      return;
+    }
+    navigation.navigate("EmergencyScreen", {
+      screen: "EmergencyButtonScreen",
+      params: {
+        sos: contacts.filter((item) => item.category === "SOS")[0].phoneNo,
+      },
+    });
   };
 
   return (
@@ -129,6 +209,12 @@ const Econtacts = ({navigation}) => {
               onPress={() => filterContactsByCategory("All")}
             >
               <Text style={styles.filterButtonText}>All</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.filterButton}
+              onPress={() => filterContactsByCategory("SOS")}
+            >
+              <Text style={styles.filterButtonText}>SOS</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.filterButton}
@@ -292,7 +378,7 @@ const styles = StyleSheet.create({
     right: 20,
     backgroundColor: "red",
     borderRadius: 50,
-    padding : 15
+    padding: 15,
   },
   sosButtonText: {
     color: "white",
