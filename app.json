@@ -1,15 +1,15 @@
 {
   "expo": {
     "name": "AccessRide",
-    "slug": "AccessRide",
+    "slug": "accessride-user",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/splash.png.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#0F6408"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -21,7 +21,10 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -32,8 +35,14 @@
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
-      ], 
+      ],
       "@react-native-voice/voice"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "07c1a924-6bfb-4a85-98d3-1ed72de40a9c"
+      }
+    },
+    "owner": "dev_leena"
   }
 }
